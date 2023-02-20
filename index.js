@@ -2,6 +2,7 @@ const express = require("express");
 const next = require("next");
 const cookieParser = require('cookie-parser');
 const apiRoutes = require("./routes/api.js");
+const authRoutes = require("./routes/auth.js");
 const cors = require ("cors");
 
 
@@ -28,6 +29,7 @@ app
     });
 
     server.use("/api", apiRoutes(server));
+    server.use("/auth", authRoutes(server));
 
     server.get("*", (req, res) => {
       return handle(req, res);

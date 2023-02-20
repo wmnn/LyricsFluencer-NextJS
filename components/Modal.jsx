@@ -1,10 +1,9 @@
 import React, { useState } from "react";
+import { languages } from "../staticData.js";
 
 function Modal({
-  languages,
   setTargetLanguage,
   setOpen,
-  targetLanguage,
   searchedLanguage,
   setSearchedLanguage,
 }) {
@@ -13,7 +12,7 @@ function Modal({
   );
 
   return (
-    <div className="overflow-auto h-72 w-72">
+    <div className="overflow-auto relative h-72 w-full">
       {filteredLanguages.map((o, index) => {
         return (
           <div
