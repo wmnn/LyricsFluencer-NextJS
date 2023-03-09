@@ -1,45 +1,46 @@
-import React, { useState, useEffect } from "react";
-import Inputs from "../components/Inputs";
+import React, {useEffect} from 'react'
+import {auth} from "../src/util/firebase";
+import { onAuthStateChanged } from 'firebase/auth';
+import { Reasons, Explaination, KeyVisual } from '../components';
+import { useRouter } from "next/router";
 
-function index() {
-  const [lyrics, setLyrics] = useState("");
-  const [translatedLyrics, setTranslatedLyrics] = useState("");
-  const [combinedLyrics, setCombinedLyrics] = useState("");
-  const [artist, setArtist] = useState("");
-  const [song, setSong] = useState("");
+function Index() {
+  const router = useRouter()
 
-  return (
-    <div className="">
-      <Inputs
-        setArtist={setArtist}
-        setSong={setSong}
-        setLyrics={setLyrics}
-        setTranslatedLyrics={setTranslatedLyrics}
-        setCombinedLyrics={setCombinedLyrics}
-      />
-
-      <div className="flex flex-col items-center justify-center text-l md:text-2xl p-8 mt-8">
-        <div className="md:w-[60%] xl:w-[40%] text-black mb-8 w-full">
-          {artist ? <p>Artist: {artist}</p> : ""}
-          {song ? <p>Title: {song}</p> : ""}
-        </div>
-
-        {lyrics && translatedLyrics && combinedLyrics ? (
-          <div
-            className="md:w-[60%] xl:w-[40%]"
-            dangerouslySetInnerHTML={combinedLyrics}
-          ></div>
-        ) : (
-          ""
-        )}
-        {/* { combinedLyrics ? <span className="text-black whitespace-pre-wrap">{`${combinedLyrics}`}</span> : "" } */}
-        
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, (user) => {
+      if (user){
+        //window.location.href = 'http://localhost:8080/payment/plan' + "?token=" + user.accessToken
+        fetch("/payment/plan?token=" + user.accessToken, {
+          method: "GET", 
+          //headers: { "Content-Type" : "application/json" },
+          //body: JSON.stringify({ name: "User 1"}),
+        })
+        .then( res => res.json() )
+        .then( data => {
+          console.log(data)
+          data.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
+        })
+      }
+    })
       
-      </div>
-
-     
-    </div>
-  );
+    }, []);
+  return (
+    <>
+      <KeyVisual />
+      <Reasons />
+      <Explaination />     
+    </>
+  )
 }
 
-export default index;
+export default Index
+
+
+Index.getLayout = function PageLayout(page){
+	return(
+		<>
+		{page}
+		</>
+	)
+}

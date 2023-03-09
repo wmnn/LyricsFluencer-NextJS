@@ -2,10 +2,8 @@ const express = require("express");
 const next = require("next");
 const cookieParser = require('cookie-parser');
 const apiRoutes = require("./routes/api.js");
-const authRoutes = require("./routes/auth.js");
+const paymentRoutes = require("./routes/payment.js");
 const cors = require ("cors");
-
-
 require('dotenv').config()
 
 const PORT = process.env.PORT || 3000;
@@ -19,7 +17,7 @@ app
   .then(() => {
     const server = express();
 
-    //server.use(cors({ origin: "*", credentials: true }))
+    server.use(cors({ origin: "http://localhost:8080", credentials: true }))
     server.use(cookieParser());
     server.use(express.json());
     
@@ -29,7 +27,8 @@ app
     });
 
     server.use("/api", apiRoutes(server));
-    server.use("/auth", authRoutes(server));
+    server.use("/payment", paymentRoutes(server));
+  
 
     server.get("*", (req, res) => {
       return handle(req, res);

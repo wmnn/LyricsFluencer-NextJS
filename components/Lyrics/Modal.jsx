@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { languages } from "../staticData.js";
+import { languages } from "../../staticData.js";
 
 function Modal({
   setTargetLanguage,

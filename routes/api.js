@@ -2,15 +2,24 @@ const router = require("express").Router();
 const axios = require("axios");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const {db} = require("../util/firebase")
+// const middleware = require('../util/middleware');
+
 
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 function routes(app) {
+  //router.post("/test2")
+  // router.post("/test", middleware.decodeToken, async (req,res) => {
+  //   return res.json({status: 200})
+    
+  // })
   router.post("/search", async (req, res) => {
     const data = await handleSearch(req.body.searchQuery);
     res.json({ status: 200, data: data });
   });
+
 
   router.post("/quicksearch", async (req, res) => {
     try {
