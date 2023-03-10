@@ -14,7 +14,7 @@ async function verifyToken(token){
         const decodeValue = await admin.auth().verifyIdToken(token);
         if (decodeValue) {
             //console.log(decodeValue)
-            return decodeValue.uid 
+            return { uid: decodeValue.uid, email: decodeValue.email } 
         }else{
             return null
         }

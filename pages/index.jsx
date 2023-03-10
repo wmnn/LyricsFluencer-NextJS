@@ -3,6 +3,7 @@ import {auth} from "../src/util/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 import { Reasons, Explaination, KeyVisual } from '../components';
 import { useRouter } from "next/router";
+import Link from 'next/link';
 
 function Index() {
   const router = useRouter()
@@ -41,6 +42,11 @@ Index.getLayout = function PageLayout(page){
 	return(
 		<>
 		{page}
+    <div className='flex justify-center space-x-8 h-8 mt-24 mb-4'>
+        {/* <Link href="/imprint">Imprint</Link> */}
+        <Link href="/terms">Terms and Conditions</Link>
+        <Link href="/privacy">Privacy Policy</Link>
+    </div>
 		</>
 	)
 }

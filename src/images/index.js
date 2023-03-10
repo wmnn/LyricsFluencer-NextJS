@@ -10,6 +10,10 @@ import LyricsMenu from './LyricsMenu.png'
 import LyricsMenuCropped from './LyricsMenuCropped.png'
 import Search from './Search.png'
 import Logo from './Logo.png'
-import Appstore from './Appstore.svg'
+import AppstoreIcon from './Appstore.svg'
+import Mastercard from './paymentIcons/mastercard.png'
+import Visa from './paymentIcons/Visa.png'
+import Stripe from './paymentIcons/Stripe.svg'
+import AmericanExpress from './paymentIcons/AmericanExpress.png'
 
-export {AddToDeck, Card, Card_2, Decks, EditCards, EditDeck, GoogleMeaning, Lyrics, LyricsMenu, Search, Logo, Appstore, LyricsMenuCropped}
+export {AddToDeck, Card, Card_2, Decks, EditCards, EditDeck, GoogleMeaning, Lyrics, LyricsMenu, Search, Logo, AppstoreIcon, LyricsMenuCropped, Mastercard, Visa, Stripe, AmericanExpress}

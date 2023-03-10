@@ -20,7 +20,7 @@ async function generateAccessToken() {
     return data.access_token;
 }
 
-const getSubscription = async (subscriptionId) => {
+const verifyPaypalSubscription = async (subscriptionId) => {
     const access_token = await generateAccessToken()
     res = await fetch(`${base}/v1/billing/subscriptions/${subscriptionId}`, {
       method: "GET",
@@ -77,4 +77,4 @@ const getPlans = async() => {
   });
   }
 
-module.exports = {generateAccessToken, getSubscription, cancelSubscription, getPlans}
+module.exports = {generateAccessToken, verifyPaypalSubscription, cancelSubscription, getPlans}

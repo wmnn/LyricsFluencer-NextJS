@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {AiOutlineMenu} from "react-icons/ai" //IONIICONS
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import {auth} from '../src/util/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -85,7 +86,7 @@ const Header = () => {
                                         setMenu(false)
                                     }}>Logout</li>
                                 </>: <>
-                                    <li className="hover:cursor-pointer" onClick={() => handleNavigate("pricing")}>Pricing</li>
+                                    {/* <li className="hover:cursor-pointer" onClick={() => handleNavigate("pricing")}>Pricing</li> */}
                                     <li className="hover:cursor-pointer" onClick={() => handleNavigate("login")}>Login</li>
                                 </>
                             }
@@ -98,7 +99,12 @@ const Header = () => {
 }
   
 const Footer = () => {
-  return (<h3 className="">This is a Footer</h3>)
+  return (
+    <div>
+        <p>Terms and Conditions</p>
+        <p>Privacy Policy</p>
+    </div>
+  )
 }
   
 const Layout = ({ children }) => {
@@ -107,6 +113,11 @@ const Layout = ({ children }) => {
       <Header />
       {children}
       {/* <Footer /> */}
+      <div className='flex justify-center space-x-8 h-8 mt-24 mb-4'>
+        {/* <Link href="/imprint">Imprint</Link> */}
+        <Link href="/terms">Terms and Conditions</Link>
+        <Link href="/privacy">Privacy Policy</Link>
+    </div>
     </>
   )
 };
