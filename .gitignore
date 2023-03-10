@@ -1,5 +1,4 @@
 .env 
 /node_modules
-/.next/cache
-src/util/firebase.js
+.next/cache
 util/firebaseServiceAccount.json
