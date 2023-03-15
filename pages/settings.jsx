@@ -6,6 +6,7 @@ import {auth} from "../src/util/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from "next/router";
 import {root} from '../staticData'
+import axios from 'axios'
 
 function Settings() {
   const [plan, setPlan] = useState("") 
@@ -17,7 +18,22 @@ function Settings() {
   useEffect(() => {
     const listen = onAuthStateChanged(auth, async (user) => {
       if (user){
-        fetch(`https://www.lyricsfluencer.com/payment/plan?token=${user.accessToken}`)
+        /*
+        axios.get(root + `/payment/plan?token=${user.accessToken}`)
+        .then(function (json) {
+          // handle success
+          console.log(json.data)
+            setPlan(json.data.subscriptionPlan)
+            setSubscriptionStatus(json.data.subscriptionStatus)
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })*/
+        fetch('https://jsonplaceholder.typicode.com/todos/1')
+      .then(response => response.json())
+      .then(json => console.log(json))
+        fetch(`/payment/plan?token=${user.accessToken}`)
           .then(res => res.json())
           .then(json => {
             console.log("Checked Plan")

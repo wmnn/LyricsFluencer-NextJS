@@ -5,6 +5,7 @@ import { Reasons, Explaination, KeyVisual } from '../components';
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import {root} from '../staticData'
+import axios from 'axios'
 
 function Index() {
   const router = useRouter()
@@ -13,8 +14,24 @@ function Index() {
     const listen = onAuthStateChanged(auth, async (user) => {
       if (user){
         console.log("Logged in Request plan")
+
+        // axios.get(root + `/payment/plan?token=${user.accessToken}`)
+        // .then(function (json) {
+        //   // handle success
+        //   console.log(json);
+        //   console.log("Checked Plan")
+        //   json.data.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
+        // })
+        // .catch(function (error) {
+        //   // handle error
+        //   console.log(error);
+        // })
+
+        fetch('https://jsonplaceholder.typicode.com/todos/1')
+      .then(response => response.json())
+      .then(json => console.log(json))
          
-        fetch(`https://www.lyricsfluencer.com/payment/plan?token=${user.accessToken}`)
+        fetch(`/payment/plan?token=${user.accessToken}`)
           .then(res => res.json())
           .then(json => {
             console.log("Checked Plan")

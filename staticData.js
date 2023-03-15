@@ -5,6 +5,7 @@
 // export const paypal_plan_id = "P-9X30873493600054JMQI2D3Q"
 // export const paypal_client_id = "AWRyifyqR63iaqsTQrjbCSyCH7caW6hNPZgYJPq78DJbIam0L913OC4h7NFkmebA9aJzFn3fw0HxncNS"
 
+
 //PRODUCTION
 
 export const root = "https://www.lyricsfluencer.com"
