@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Inputs from "../components/Inputs";
+import Inputs from "../components/Lyrics/Inputs";
 
 function index() {
   const [lyrics, setLyrics] = useState("");
@@ -9,7 +9,7 @@ function index() {
   const [song, setSong] = useState("");
 
   return (
-    <div className="">
+    <div className="">{/*
       <Inputs
         setArtist={setArtist}
         setSong={setSong}
@@ -32,11 +32,12 @@ function index() {
         ) : (
           ""
         )}
-        {/* { combinedLyrics ? <span className="text-black whitespace-pre-wrap">{`${combinedLyrics}`}</span> : "" } */}
+         { //combinedLyrics ? <span className="text-black whitespace-pre-wrap">{`${combinedLyrics}`}</span> : "" } 
+         }
         
       
       </div>
-
+        */}
      
     </div>
   );

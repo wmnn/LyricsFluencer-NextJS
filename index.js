@@ -17,7 +17,7 @@ app
   .then(() => {
     const server = express();
 
-    server.use(cors({ origin: "http://localhost:8080", credentials: true }))
+    server.use(cors({ origin: process.env.ROOT, credentials: true }))
     server.use(cookieParser());
     server.use(express.json());
     

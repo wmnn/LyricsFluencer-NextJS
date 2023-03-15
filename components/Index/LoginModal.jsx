@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import UserContext from '../Context/UserContext.jsx'
+import { onAuthStateChanged } from 'firebase/auth';
 import {auth} from '../../src/util/firebase'
 import { useRouter } from "next/router";
 
@@ -14,6 +15,7 @@ function LoginModal({setIsLoginClicked, setIsRegisterClicked}) {
       e.preventDefault();
       signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+          console.log("Logged in" + userCredential.user.email)
           setUserContext(userCredential.user)
       }).catch((error) => {
           console.log(error)

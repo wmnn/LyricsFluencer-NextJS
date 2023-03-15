@@ -1,11 +1,12 @@
 const router = require("express").Router();
-const { db, admin, verifyToken } = require("../util/firebase");
-const { generateAccessToken, verifyPaypalSubscription, cancelSubscription, getPlans} = require("../util/paypal.js")
+const { db, admin, verifyToken, deleteUser} = require("../util/firebase");
+const { generateAccessToken, verifyPaypalSubscription, cancelPaypalSubscription, getPaypalPlans, createPaypalPlan, getPaypalProducts, createPaypalProduct} = require("../util/paypal.js")
 const { createStripeSession, createStripeCustomer, verifyStripeSubscription } = require("../util/stripe.js")
 
 function routes(app) {
     router.get("/capture/paypal", async (req,res) => {
-        const {subscriptionId, token, plan } = req.query;
+        const {subscriptionId, token } = req.query;
+        const plan = "premium"
         const { uid }  = await verifyToken(token)
         if (!uid){
             return res.json({ message: 'Invalid token' });
@@ -22,18 +23,66 @@ function routes(app) {
         }
         try {
             await db.collection("users").doc(uid).set(data, {merge: true})
-            res.redirect("/appstore")
+            res.redirect("/onboarding/appstore")
         } catch (e) {
             return res.json({ message: 'Internal Error' });
         }
       })
-      
-      // router.post("/cancel/paypal", async (req, res) => { 
-      //   const subsciptionId = req.body.subsciptionId
-      //   const reason = req.body.reason 
-      //   cancelSubscription(subsciptionId, reason)
-      //   return res.json({status: 200})
-      // })
+      router.get("/getPaypalPlans", async (req,res) => {
+          const data = await getPaypalPlans();
+          return res.json({status: 200, data: data})
+      })
+      router.get("/getPaypalProducts", async (req,res) => {
+        const data = await getPaypalProducts();
+        return res.json({status: 200, data: data})
+      })
+      /*router.get('/createPaypalProduct', async (req,res) => {
+        const data = await createPaypalProduct();
+        return res.json({status: 200, data: data})
+      });
+      router.get('/createPaypalPlan', async (req,res) => { //creates a plan
+        const data = await createPaypalPlan();
+        return res.json({data: data})
+      })*/
+
+      router.get("/cancel/paypal", async (req, res) => { 
+        const { token } = req.query;
+        const reason = "LOREM IPSUM"
+        const { uid }  = await verifyToken(token)
+        if (!uid){
+          return res.json({ message: 'Invalid token' });
+        }  
+        const user = await db.collection("users").doc(uid).get()
+        if(!user._fieldsProto){ //If no document is found create a document with a free plan
+          return res.json({status: 404})
+        }
+        if (user._fieldsProto.subscriptionProvider.stringValue == "PAYPAL" && user._fieldsProto.subscriptionStatus.stringValue != "EXPIRED"){
+          const data = await cancelPaypalSubscription(user._fieldsProto.subscriptionId.stringValue, reason) 
+          return res.json({status: 200})
+        }
+      })
+      router.delete("/account", async (req,res) => { //Delete account endpoint
+        const { token } = req.query;
+        const reason = "LOREM IPSUM"
+        const { uid }  = await verifyToken(token)
+        if (!uid){
+          return res.json({ message: 'Invalid token' });
+        }  
+        const user = await db.collection("users").doc(uid).get()
+        if(!user._fieldsProto){ //If no document is found create a document with a free plan
+          return res.json({status: 404})
+        }
+        console.log(user._fieldsProto)
+        if (user._fieldsProto.subscriptionPlan.stringValue == "special" || user._fieldsProto.subscriptionPlan.stringValue == "free"){
+          await deleteUser(uid);
+          return res.json({status: 200})
+        }
+        if (user._fieldsProto.subscriptionProvider.stringValue == "PAYPAL" && user._fieldsProto.subscriptionStatus.stringValue != "EXPIRED"){
+          const data = await cancelPaypalSubscription(user._fieldsProto.subscriptionId.stringValue, reason)
+        }
+        await deleteUser(uid);
+          return res.json({status: 200})
+      })
       router.get("/stripe", async (req,res) => {
         const productId = process.env.STRIPE_PRICE_ID
         const { token } = req.query
@@ -78,7 +127,7 @@ function routes(app) {
             subscriptionPlan: "free"
           }
           await db.collection("users").doc(uid).set(data)
-          return res.json({ status: 200, subsciptionPlan : "free"})
+          return res.json({ status: 200, subscriptionPlan : "free"})
         }
         if (user._fieldsProto.subscriptionPlan.stringValue == "free") { 
           return res.json({status: 200, subscriptionPlan: "free"})
@@ -98,7 +147,7 @@ function routes(app) {
             }
             await db.collection("users").doc(uid).set(data, {merge: true})
           }
-          return res.json({status: 200, subscriptionPlan: user._fieldsProto.subscriptionPlan.stringValue, subscriptionId: subscriptionId, subscriptionPlanId: subscriptionDetails.plan_id, subscriptionStatus: subscriptionDetails.status})
+          return res.json({status: 200, subscriptionPlan: user._fieldsProto.subscriptionPlan.stringValue, subscriptionId: firebaseSubscriptionId, subscriptionPlanId: paypalSubscriptionDetails.plan_id, subscriptionStatus: paypalSubscriptionDetails.status})
         }else if(firebaseSubscriptionProvider == "STRIPE"){
           const stripeSubscriptionDetails = await verifyStripeSubscription(firebaseSubscriptionId);
           var stripeSubscriptionStatus = stripeSubscriptionDetails.data[0].status;

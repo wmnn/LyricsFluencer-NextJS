@@ -47,14 +47,14 @@ const Header = () => {
             </div>
             { 
                 currentUser? <>               
-                <div className="grow basis-0 flex flex-col items-center">
-                <h1 className='text-6xl font-bold'>LyricsFluencer</h1>
+                <div className="grow basis-0 flex flex-col items-center text-center">
+                <h1 className='text-4xl font-bold'>LyricsFluencer</h1>
                 <h2 className='text-2xl'>Learn lanugages with music on IOS</h2>
                 </div>
                 </> : <>
-                <div className="grow basis-0 flex flex-col items-center hover:cursor-pointer" onClick={() => router.push("/")}>
-                <h1 className='text-6xl font-bold'>LyricsFluencer</h1>
-                <h2 className='text-2xl'>Learn lanugages with music on IOS</h2>
+                <div className="grow basis-0 flex flex-col items-center hover:cursor-pointer text-center" onClick={() => router.push("/")}>
+                <h1 className='text-4xl font-bold'>LyricsFluencer</h1>
+                <h2 className='text-2xl text-center'>Learn lanugages with music on IOS</h2>
                 </div>
                 </>
 
@@ -80,6 +80,10 @@ const Header = () => {
                         <ul className="flex flex-col items-center text-2xl space-y-8">
                             {
                                 currentUser? <>
+                                    <li className="hover:cursor-pointer" onClick={() => {
+                                        router.push("/settings")
+                                        setMenu(false)
+                                    }}>Settings</li>
                                     <li className="hover:cursor-pointer" onClick={() => {
                                         userSignOut();
                                         router.push("/")

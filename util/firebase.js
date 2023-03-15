@@ -22,5 +22,32 @@ async function verifyToken(token){
 
     }
 }
+async function deleteUser(uid){
+    ref = db.collection("users").doc(uid)
+    deleteDocumentAndSubcollections(ref)
+    ref = db.collection("flashcards").doc(uid)
+    deleteDocumentAndSubcollections(ref)
 
-module.exports = {admin, db, verifyToken};
+    admin.auth().deleteUser(uid)
+        .then(() => {
+            console.log('User deleted successfully.');
+        })
+        .catch((error) => {
+            console.error('Error deleting user:', error);
+    });
+
+}
+async function deleteDocumentAndSubcollections(ref) {
+    // Get all subcollections of the document
+    const subcollections = await ref.listCollections();
+    // Delete all subcollections recursively
+    for (const subcollection of subcollections) {
+      await deleteCollection(subcollection);
+    }
+    // Delete the document
+    await ref.delete();
+
+    
+}
+
+module.exports = {admin, db, verifyToken, deleteUser};

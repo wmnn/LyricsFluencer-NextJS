@@ -18,15 +18,11 @@ function RegisterModal({setIsRegisterClicked, setIsLoginClicked}) {
       .then((userCredential) => {
         console.log(userCredential)
         setUserContext(userCredential)
-        router.push(`/onboarding/plans?plan=premium`)
-        
       }).catch((error) => {
         console.log(error)
       })
     }
 
-    
-  
   return (
     <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center text-xl">
       <div className='flex flex-col mt-[-10%] w-[80%] md:w-[40%]'>

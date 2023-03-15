@@ -1,6 +1,17 @@
+//FRONTEND STATIC DATA
+//DEV
 
+// export const root = "http://localhost:8080"
+// export const paypal_plan_id = "P-9X30873493600054JMQI2D3Q"
+// export const paypal_client_id = "AWRyifyqR63iaqsTQrjbCSyCH7caW6hNPZgYJPq78DJbIam0L913OC4h7NFkmebA9aJzFn3fw0HxncNS"
 
+//PRODUCTION
 
+export const root = "https://www.lyricsfluencer.com"
+export const paypal_plan_id = "P-31E648775W5857732MQI2RBA"
+export const paypal_client_id = "ARWaYk8B8cmHMzdEZEMli4Nfb3AT5Gs6oMJEtkaw61ak2jq3tqBQRnEMc2ErfBf4YeXnjPcm-bQ0gaM2"
+
+//
 export const languages = [
     {
       language: "af",

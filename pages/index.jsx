@@ -4,26 +4,28 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { Reasons, Explaination, KeyVisual } from '../components';
 import { useRouter } from "next/router";
 import Link from 'next/link';
+import {root} from '../staticData'
 
 function Index() {
   const router = useRouter()
 
   useEffect(() => {
-    const listen = onAuthStateChanged(auth, (user) => {
+    const listen = onAuthStateChanged(auth, async (user) => {
       if (user){
-        //window.location.href = 'http://localhost:8080/payment/plan' + "?token=" + user.accessToken
-        fetch("/payment/plan?token=" + user.accessToken, {
-          method: "GET", 
-          //headers: { "Content-Type" : "application/json" },
-          //body: JSON.stringify({ name: "User 1"}),
+        console.log("Logged in Request plan")
+         
+        fetch(`https://www.lyricsfluencer.com/payment/plan?token=${user.accessToken}`)
+          .then(res => res.json())
+          .then(json => {
+            console.log("Checked Plan")
+            console.log(json)
+            json.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
         })
-        .then( res => res.json() )
-        .then( data => {
-          console.log(data)
-          data.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
-        })
-      }
+    }
     })
+    return () => { //on Unmount this will be called
+      listen();
+    }   
       
     }, []);
   return (

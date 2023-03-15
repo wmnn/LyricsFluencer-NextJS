@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start"
   },
   "keywords": [],
