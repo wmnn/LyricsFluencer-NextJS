@@ -15,29 +15,29 @@ function Index() {
       if (user){
         console.log("Logged in Request plan")
 
-        // axios.get(root + `/payment/plan?token=${user.accessToken}`)
-        // .then(function (json) {
-        //   // handle success
-        //   console.log(json);
-        //   console.log("Checked Plan")
-        //   json.data.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
-        // })
-        // .catch(function (error) {
-        //   // handle error
-        //   console.log(error);
-        // })
+        axios.get("http://localhost:8080" + `/payment/plan?token=${user.accessToken}`)
+        .then(function (json) {
+          // handle success
+          console.log(json);
+          console.log("Checked Plan")
+          json.data.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
 
         fetch('https://jsonplaceholder.typicode.com/todos/1')
       .then(response => response.json())
       .then(json => console.log(json))
          
-        fetch(`/payment/plan?token=${user.accessToken}`)
-          .then(res => res.json())
-          .then(json => {
-            console.log("Checked Plan")
-            console.log(json)
-            json.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
-        })
+        // fetch('http://localhost:8080' + `/payment/plan?token=` + user.accessToken)
+        //   .then(res => res.json())
+        //   .then(json => {
+        //     console.log("Checked Plan")
+        //     console.log(json)
+        //     json.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
+        // })
     }
     })
     return () => { //on Unmount this will be called

@@ -33,7 +33,7 @@ function Settings() {
         fetch('https://jsonplaceholder.typicode.com/todos/1')
       .then(response => response.json())
       .then(json => console.log(json))
-        fetch(`/payment/plan?token=${user.accessToken}`)
+        fetch(`http://localhost:8080/payment/plan?token=${user.accessToken}`)
           .then(res => res.json())
           .then(json => {
             console.log("Checked Plan")
