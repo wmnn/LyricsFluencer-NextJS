@@ -118,7 +118,7 @@ const Layout = ({ children }) => {
       {children}
       {/* <Footer /> */}
       <div className='flex justify-center space-x-8 h-8 mt-24 mb-4'>
-        {/* <Link href="/imprint">Imprint</Link> */}
+        <Link href="/imprint">Imprint</Link>
         <Link href="/terms">Terms and Conditions</Link>
         <Link href="/privacy">Privacy Policy</Link>
     </div>

@@ -2,8 +2,35 @@ const router = require("express").Router();
 const { db, admin, verifyToken, deleteUser} = require("../util/firebase");
 const { generateAccessToken, verifyPaypalSubscription, cancelPaypalSubscription, getPaypalPlans, createPaypalPlan, getPaypalProducts, createPaypalProduct} = require("../util/paypal.js")
 const { createStripeSession, createStripeCustomer, verifyStripeSubscription } = require("../util/stripe.js")
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-function routes(app) {
+    router.get("/mailerlite", async (req,res) => {
+      const { email } = req.query;
+      var data = await fetch("https://connect.mailerlite.com/api/subscribers/" + email, {
+        method: "GET", 
+        headers: { 
+          "Content-Type" : "application/json",
+          'Authorization': `Bearer ${process.env.MAILERLITE}`,
+        },
+      })
+      data = await data.json()
+      data.data ? data.data.status == "active" ? res.json({status: 200}) : res.json({status:404}) : res.json({status:404})
+    })
+    router.get("/free", async (req,res) => {//CREATING A FREE USER IN DB
+      const {token } = req.query; 
+      const { uid }  = await verifyToken(token)
+      //Save the user into db
+      const data = {
+        subscriptionPlan: "free",
+      }
+    try {
+        await db.collection("users").doc(uid).set(data, {merge: true})
+        return res.json({status:200})
+    } catch (e) {
+        return res.json({ message: 'Internal Error' });
+    }
+    })
+ 
     router.get("/capture/paypal", async (req,res) => {
         const {subscriptionId, token } = req.query;
         const plan = "premium"
@@ -127,10 +154,12 @@ function routes(app) {
             subscriptionPlan: "free"
           }
           await db.collection("users").doc(uid).set(data)
-          return res.json({ status: 200, subscriptionPlan : "free"})
+          //return res.json({ status: 200, subscriptionPlan : "free"}) //On free is requests restriction
+          return res.json({ status: 200, subscriptionPlan : "special"})
         }
         if (user._fieldsProto.subscriptionPlan.stringValue == "free") { 
-          return res.json({status: 200, subscriptionPlan: "free"})
+          //return res.json({status: 200, subscriptionPlan: "free"})
+          return res.json({ status: 200, subscriptionPlan : "special"})
         }
         if (user._fieldsProto.subscriptionPlan.stringValue == "special") { 
           return res.json({status: 200, subscriptionPlan: "special"})
@@ -166,7 +195,6 @@ function routes(app) {
           return res.json({status: 200, subscriptionPlan: "premium", subscriptionId: firebaseSubscriptionId, subscriptionStatus: stripeSubscriptionStatus})
         }
       })
-  return router;
-}
 
-module.exports = routes;
+
+module.exports = router;

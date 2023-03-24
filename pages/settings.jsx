@@ -18,22 +18,7 @@ function Settings() {
   useEffect(() => {
     const listen = onAuthStateChanged(auth, async (user) => {
       if (user){
-        /*
-        axios.get(root + `/payment/plan?token=${user.accessToken}`)
-        .then(function (json) {
-          // handle success
-          console.log(json.data)
-            setPlan(json.data.subscriptionPlan)
-            setSubscriptionStatus(json.data.subscriptionStatus)
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })*/
-        fetch('https://jsonplaceholder.typicode.com/todos/1')
-      .then(response => response.json())
-      .then(json => console.log(json))
-        fetch(`http://localhost:8080/payment/plan?token=${user.accessToken}`)
+        fetch(`${root}/payment/plan?token=${user.accessToken}`)
           .then(res => res.json())
           .then(json => {
             console.log("Checked Plan")

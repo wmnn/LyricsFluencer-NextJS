@@ -14,30 +14,15 @@ function Index() {
     const listen = onAuthStateChanged(auth, async (user) => {
       if (user){
         console.log("Logged in Request plan")
-
-        axios.get("http://localhost:8080" + `/payment/plan?token=${user.accessToken}`)
-        .then(function (json) {
-          // handle success
-          console.log(json);
-          console.log("Checked Plan")
-          json.data.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
+        const url = `${root}/payment/plan?token=${user.accessToken}`
+        console.log(url)
+        fetch(url)
+          .then(res => res.json())
+          .then(json => {
+            console.log("Checked Plan")
+            console.log(json)
+            json.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
         })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
-
-        fetch('https://jsonplaceholder.typicode.com/todos/1')
-      .then(response => response.json())
-      .then(json => console.log(json))
-         
-        // fetch('http://localhost:8080' + `/payment/plan?token=` + user.accessToken)
-        //   .then(res => res.json())
-        //   .then(json => {
-        //     console.log("Checked Plan")
-        //     console.log(json)
-        //     json.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
-        // })
     }
     })
     return () => { //on Unmount this will be called
@@ -48,8 +33,8 @@ function Index() {
   return (
     <>
       <KeyVisual />
-      <Reasons />
-      <Explaination />     
+      {/* <Reasons />
+      <Explaination />      */}
     </>
   )
 }
@@ -62,7 +47,7 @@ Index.getLayout = function PageLayout(page){
 		<>
 		{page}
     <div className='flex justify-center space-x-8 h-8 mt-24 mb-4'>
-        {/* <Link href="/imprint">Imprint</Link> */}
+        <Link href="/imprint">Imprint</Link>
         <Link href="/terms">Terms and Conditions</Link>
         <Link href="/privacy">Privacy Policy</Link>
     </div>

@@ -26,8 +26,8 @@ app
         handle(req, res);
     });
 
-    server.use("/api", apiRoutes(server));
-    server.use("/payment", paymentRoutes(server));
+    // server.use("/api", apiRoutes(server));
+    // server.use("/payment", paymentRoutes(server));
   
 
     server.get("*", (req, res) => {
