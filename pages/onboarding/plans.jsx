@@ -95,9 +95,9 @@ function Setup() {
                         createSubscription={createSubscription}
                         onApprove={onApprove}
                         onError={onError}
-                    />{/*
+                    />
 
-                    <div className='bg-black w-full h-[55px] hover:opacity-80 hover:cursor-pointer rounded  transition-all flex justify-center items-center mt-4 max-w-[750px]' onClick={() => handleStripePayment()}>
+                    {/* <div className='bg-black w-full h-[55px] hover:opacity-80 hover:cursor-pointer rounded  transition-all flex justify-center items-center mt-4 max-w-[750px]' onClick={() => handleStripePayment()}>
                         <p className='text-white text-2xl'>Secure Checkout</p>
                     </div>
                     <div className='flex justify-center items-center mt-4'>
@@ -105,8 +105,8 @@ function Setup() {
                             <img src={'/images/paymentIcons/AmericanExpress.png'} className="object-contain w-16 h-8"/>
                             <img src={'/images/paymentIcons/mastercard.png'} className="object-contain h-10 w-14 rounded p-2 border-gray-300"/>
                             <img src={'/images/paymentIcons/visa.png'} className="object-contain w-16 h-4"/>
-                        </div>
-                    */}
+                        </div> */}
+                    
             </PayPalScriptProvider> 
             
         {/* </div> */}

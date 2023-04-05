@@ -14,7 +14,8 @@ function Login() {
       signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
           console.log("Logged in" + userCredential.user.email)
-          setUserContext(userCredential.user)
+          //setUserContext(userCredential.user)
+          router.push("/onboarding/plans")
       }).catch((error) => {
           console.log(error)
       })

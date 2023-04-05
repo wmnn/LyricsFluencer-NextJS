@@ -16,14 +16,13 @@ const fetch = (...args) =>
   router.post("/quicksearch", async (req, res) => {
     try {
       if(req.body.target){
-        const target = req.body.target
-      const data = await handleSearch(req.body.searchQuery);
+        const target = req.body.target //Target language
+      const data = await handleSearch(req.body.searchQuery); //Searching the song with the given query
       //console.log(JSON.stringify(data, null, 2))
       const artist = data.message.body.track_list[0].track.artist_name;
       const song = data.message.body.track_list[0].track.track_name;
-
-      const scrapeURL = data.message.body.track_list[0].track.track_share_url.split('?')[0] //https://www.musixmatch.com/lyrics/Apache-207/Roller?
-      //console.log(scrapeURL);
+      const scrapeURL = data.message.body.track_list[0].track.track_share_url.split('?')[0] 
+ 
       var lyrics = await getLyrics(scrapeURL);
       const translatedLyrics = await handleTranslate(lyrics, target);
       //console.log(translatedLyrics)
