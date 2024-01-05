@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { onAuthStateChanged } from 'firebase/auth';
 import {auth} from '../src/util/firebase'

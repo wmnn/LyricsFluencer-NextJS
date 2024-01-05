@@ -2,22 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
     background-color: white;
-    
-
     color: black;
-    
 }
-input{
+input {
     color: black
 }
-.text-red{
+.text-red {
     color: rgb(0, 0, 0)
 }
-.text-blue{
+.text-blue {
     color:rgb(148, 148, 148)
 }
-.prewrap{
+.prewrap {
     white-space: pre-wrap;
 }

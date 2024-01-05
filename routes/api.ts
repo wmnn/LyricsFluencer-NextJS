@@ -1,15 +1,21 @@
 //@ts-nocheck
 //@ts-ignore
-const router = require('express').Router();
-const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
+// import express from 'express'
+const express = require('express')
+const router = express.Router()
+// import { JSDOM } from 'jsdom';
+const { JSDOM } = require('jsdom');
 
+require("esm-hook");
+const fetch = require('node-fetch').default
+//import fetch from 'node-fetch';
 //@ts-ignore
-const fetch = (...args) =>
-    import('node-fetch').then(({ default: fetch }) => fetch(...args));
+// const fetch = (...args) =>
+//     import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-//function routes(app) {
+
 router.post('/search', async (req, res) => {
+    console.log(req.body)
     const data = await handleSearch(req.body.searchQuery);
     res.json({ status: 200, data: data });
 });
@@ -19,7 +25,6 @@ router.post('/quicksearch', async (req, res) => {
         if (req.body.target) {
             const target = req.body.target;
             const data = await handleSearch(req.body.searchQuery);
-            //console.log(JSON.stringify(data, null, 2))
             const artist = data.message.body.track_list[0].track.artist_name;
             const song = data.message.body.track_list[0].track.track_name;
 
@@ -27,10 +32,9 @@ router.post('/quicksearch', async (req, res) => {
                 data.message.body.track_list[0].track.track_share_url.split(
                     '?'
                 )[0]; //https://www.musixmatch.com/lyrics/Apache-207/Roller?
-            //console.log(scrapeURL);
+  
             var lyrics = await getLyrics(scrapeURL);
             const translatedLyrics = await handleTranslate(lyrics, target);
-            //console.log(translatedLyrics)
 
             return res.json({
                 status: 200,
@@ -149,4 +153,5 @@ async function handleTranslate(text, targetLanguage) {
 
     return translatedLyrics;
 }
-export default router;
+
+module.exports = router

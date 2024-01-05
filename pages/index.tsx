@@ -1,55 +1,88 @@
-import React, {useEffect} from 'react'
-import {auth} from "../src/util/firebase";
+import React, { useEffect, useState } from 'react';
+import { auth } from '../src/util/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { Reasons, Explaination, KeyVisual } from '../components';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 import Link from 'next/link';
-import {root} from '../staticData'
+import { root } from '../staticData';
+import Input from '../components/Input';
+import Button from '../components/Button';
 
 function Index() {
-  const router = useRouter()
+    const router = useRouter();
+    const [query, setQuery] = useState('');
 
-  useEffect(() => {
-    const listen = onAuthStateChanged(auth, async (user) => {
-      if (user){
-        console.log("Logged in Request plan")
-        const url = `${root}/payment/plan?token=${user.accessToken}`
-        console.log(url)
-        fetch(url)
-          .then(res => res.json())
-          .then(json => {
-            console.log("Checked Plan")
-            console.log(json)
-            json.subscriptionPlan == "free" ? router.push("/onboarding/plans") : router.push("/settings")
-        })
-    }
-    })
-    return () => { //on Unmount this will be called
-      listen();
-    }   
-      
+    useEffect(() => {
+        const listen = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                console.log('Logged in Request plan');
+                //@ts-ignore
+                const url = `${root}/payment/plan?token=${user.accessToken}`;
+                console.log(url);
+                const json = await (await fetch(url)).json()
+        
+                console.log('Checked Plan');
+                console.log(json);
+                json.subscriptionPlan == 'free' ? router.push('/onboarding/plans') : router.push('/settings');
+            }
+        });
+        return () => {
+            //on Unmount this will be called
+            listen();
+        };
     }, []);
-  return (
-    <>
-      <KeyVisual />
-      {/* <Reasons />
-      <Explaination />      */}
-    </>
-  )
+
+    async function handleSearch(e: React.ChangeEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        console.log(
+            (await fetch('/api/search', {
+                method: 'POST',
+                body: JSON.stringify({
+                    searchQuery: query
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            
+            }))
+        )
+        
+        fetch('http://localhost:3000/api/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                searchQuery: query 
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // Handle the response data here
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle errors here
+        });
+
+    }
+
+    return (
+        <div className='flex justify-center'>
+            <form onSubmit={handleSearch} className='w'>
+                
+                <label>Search</label>
+                <Input 
+                    type={'text'} 
+                    value={query} 
+                    handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {setQuery(e.target.value)}}
+                />
+                <Button type={'submit'} text={'Search'}/>
+            </form>
+
+        </div>
+    );
 }
 
-export default Index
-
-
-Index.getLayout = function PageLayout(page){
-	return(
-		<>
-		{page}
-    <div className='flex justify-center space-x-8 h-8 mt-24 mb-4'>
-        <Link href="/imprint">Imprint</Link>
-        <Link href="/terms">Terms and Conditions</Link>
-        <Link href="/privacy">Privacy Policy</Link>
-    </div>
-		</>
-	)
-}
+export default Index;

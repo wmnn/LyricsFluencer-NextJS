@@ -1,47 +1,49 @@
 {
-  "name": "translation",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
-  "engines": {
-    "node": "16.x"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.ts",
-    "build": "next build",
-    "export": "next build && next export",
-    "start": "next start"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@paypal/react-paypal-js": "^7.8.2",
-    "base-64": "^1.0.0",
-    "cheerio": "^1.0.0-rc.12",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dompurify": "^2.4.3",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "firebase": "^9.17.1",
-    "firebase-admin": "^11.5.0",
-    "fs": "^0.0.1-security",
-    "jsdom": "^21.1.0",
-    "next": "^13.1.6",
-    "node-fetch": "^3.3.0",
-    "nodemon": "^2.0.20",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.7.1",
-    "stripe": "^11.13.0",
-    "ts-node": "^10.9.2"
-  },
-  "devDependencies": {
-    "@types/react": "18.2.46",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.4"
-  }
+    "name": "translation",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "engines": {
+        "node": "16.x"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon index.ts",
+        "ts-node": "ts-node --esm ./index.js",
+        "build": "next build",
+        "export": "next build && next export",
+        "start": "next start"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@paypal/react-paypal-js": "^7.8.2",
+        "base-64": "^1.0.0",
+        "cheerio": "^1.0.0-rc.12",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dompurify": "^2.4.3",
+        "dotenv": "^16.0.3",
+        "esm-hook": "^0.1.4",
+        "express": "^4.18.2",
+        "firebase": "^9.17.1",
+        "firebase-admin": "^11.5.0",
+        "fs": "^0.0.1-security",
+        "jsdom": "^21.1.0",
+        "next": "^13.1.6",
+        "node-fetch": "^3.3.0",
+        "nodemon": "^2.0.20",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-icons": "^4.7.1",
+        "stripe": "^11.13.0",
+        "ts-node": "^10.9.2"
+    },
+    "devDependencies": {
+        "@types/react": "18.2.46",
+        "autoprefixer": "^10.4.16",
+        "postcss": "^8.4.33",
+        "tailwindcss": "^3.4.0"
+    }
 }

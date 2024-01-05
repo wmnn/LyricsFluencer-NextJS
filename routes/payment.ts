@@ -1,6 +1,7 @@
 //@ts-nocheck
 //@ts-ignore
-const router = require('express').Router();
+import express from 'express';
+const router = express.Router();
 import { db, verifyToken, deleteUser } from '../util/firebase';
 import {
     verifyPaypalSubscription,
