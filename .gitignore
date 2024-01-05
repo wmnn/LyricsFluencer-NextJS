@@ -3,3 +3,4 @@
 .next/cache
 util/firebaseServiceAccount.json
 /.next
+.DS_Store
