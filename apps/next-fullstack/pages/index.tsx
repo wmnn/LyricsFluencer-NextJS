@@ -67,10 +67,11 @@ function Index() {
 
         console.log(data);
 
-        setSong(data);
-
-        setIsSongShown(!isSongShown);
-
+        if (data.lyrics) {
+            setSong(data);
+            setIsSongShown(!isSongShown);
+        }
+    
     }
 
     return (

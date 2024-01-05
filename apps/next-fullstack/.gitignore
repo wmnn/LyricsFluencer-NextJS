@@ -1,0 +1,5 @@
+node_modules
+.next/cache
+util/firebaseServiceAccount.json
+firebaseServiceAccount.json
+.next

@@ -1,7 +1,7 @@
 .env 
-/node_modules
-.next/cache
-util/firebaseServiceAccount.json
-/.next
+node_modules
+.next
 .DS_Store
-./out/
+out
+build
+firebaseServiceAccount.json

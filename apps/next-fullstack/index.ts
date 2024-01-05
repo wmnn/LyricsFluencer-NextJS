@@ -1,17 +1,11 @@
 //@ts-nocheck
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
 import 'dotenv/config';
-//import apiRoutes from './routes/api.ts';
-//import paymentRoutes from './routes/payment';
 import cookieParser from 'cookie-parser';
 
 const next = require('next');
-// const cookieParser = require('cookie-parser');
-//import apiRoutes from './routes/api.ts';
 const apiRoutes = require('./routes/api.ts');
-// const paymentRoutes = require("./routes/payment.js");
 
 const PORT = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -33,7 +27,6 @@ app.prepare()
         });
 
         //server.use("/api", apiRoutes(server));
-        //console.log(apiRoutes)
         server.use("/api", apiRoutes);
         // server.use("/payment", paymentRoutes(server));
 

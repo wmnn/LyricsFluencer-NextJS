@@ -2,18 +2,18 @@
 //@ts-ignore
 import express from 'express';
 const router = express.Router();
-import { db, verifyToken, deleteUser } from '../util/firebase';
+import { db, verifyToken, deleteUser } from '@lyricsfluencer/firebase';
 import {
     verifyPaypalSubscription,
     cancelPaypalSubscription,
     getPaypalPlans,
     getPaypalProducts,
-} from '../util/paypal';
+} from '@lyricsfluencer/paypal';
 import {
     createStripeSession,
     createStripeCustomer,
     verifyStripeSubscription,
-} from '../util/stripe';
+} from '@lyricsfluencer/stripe';
 
 //@ts-ignore
 const fetch = (...args) =>

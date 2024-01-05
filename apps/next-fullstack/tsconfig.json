@@ -104,7 +104,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "strict": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "next-env.d.ts",

@@ -9,8 +9,6 @@ function Button({text, type, textColor, color, width, handleClick}) {
   )
 }
 
-export default Button
-
 Button.propTypes = {
   // message: PropTypes.string,
   // onClick: PropTypes.func
@@ -24,3 +22,5 @@ Button.defaultProps = {
   width: 'w-100', 
   handleClick: () => {} 
 };
+
+export default Button
