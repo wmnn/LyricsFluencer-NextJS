@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { getFirestore } from 'firebase-admin/firestore'
-const serviceAccount = require('./firebaseServiceAccount.json')
+import serviceAccount from './firebaseServiceAccount.json'
 import admin from 'firebase-admin';
 
 admin.initializeApp({

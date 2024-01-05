@@ -1,18 +1,18 @@
 //@ts-nocheck
 //@ts-ignore
 const router = require('express').Router();
-import { db, verifyToken, deleteUser } from '../util/firebase.js';
+import { db, verifyToken, deleteUser } from '../util/firebase';
 import {
     verifyPaypalSubscription,
     cancelPaypalSubscription,
     getPaypalPlans,
     getPaypalProducts,
-} from '../util/paypal.js';
+} from '../util/paypal';
 import {
     createStripeSession,
     createStripeCustomer,
     verifyStripeSubscription,
-} from '../util/stripe.js';
+} from '../util/stripe';
 
 //@ts-ignore
 const fetch = (...args) =>

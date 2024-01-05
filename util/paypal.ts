@@ -18,11 +18,11 @@ export async function generateAccessToken() {
             Authorization: `Basic ${auth}`,
         },
     });
-    const data = await res.json();
+    const data: any = await res.json();
     return data.access_token;
 }
 
-export async function verifyPaypalSubscription(subscriptionId) {
+export async function verifyPaypalSubscription(subscriptionId: number) {
     const access_token = await generateAccessToken();
     const res = await fetch(`${base}/v1/billing/subscriptions/${subscriptionId}`, {
         method: 'GET',
@@ -31,14 +31,14 @@ export async function verifyPaypalSubscription(subscriptionId) {
             Authorization: `Bearer ${access_token}`,
         },
     });
-    const data = await res.json();
+    const data: any = await res.json();
 
     return {
         status: data.status,
         plan_id: data.plan_id,
     };
 };
-export async function cancelPaypalSubscription(subscriptionId, reason) {
+export async function cancelPaypalSubscription(subscriptionId: number, reason: string) {
     const access_token = await generateAccessToken();
     return await (await fetch(
         `${base}/v1/billing/subscriptions/${subscriptionId}/cancel`,
