@@ -10,6 +10,9 @@ import Button from '../components/Button';
 function Index() {
     const router = useRouter();
     const [query, setQuery] = useState('');
+    const [songs, setSongs] = useState([]);
+    const [isSongShown, setIsSongShown] = useState(false);
+    const [song, setSong]: any = useState({});
 
     useEffect(() => {
         const listen = onAuthStateChanged(auth, async (user) => {
@@ -34,54 +37,95 @@ function Index() {
     async function handleSearch(e: React.ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        console.log(
-            (await fetch('/api/search', {
-                method: 'POST',
-                body: JSON.stringify({
-                    searchQuery: query
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            
-            }))
-        )
-        
-        fetch('http://localhost:3000/api/search', {
+        const { data } = await (await fetch('/api/search', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                searchQuery: query 
+            body: JSON.stringify({
+                searchQuery: query
             }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            // Handle the response data here
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Handle errors here
-        });
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })).json()
+
+        console.log(data);
+
+        setSongs(data.message.body.track_list);
+    }
+
+    async function handleSelectedSong(song) {
+        console.log(song)
+
+        const data = await (await fetch('/api/selected', {
+            method: 'POST',
+            body: JSON.stringify({
+                url: song.track.track_share_url
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })).json()
+
+        console.log(data);
+
+        setSong(data);
+
+        setIsSongShown(!isSongShown);
 
     }
 
     return (
-        <div className='flex justify-center'>
-            <form onSubmit={handleSearch} className='w'>
-                
+
+        <div className='flex justify-center flex-col p-8'>
+            { !isSongShown ? <>
+
+                <form onSubmit={handleSearch} className=''>
                 <label>Search</label>
                 <Input 
                     type={'text'} 
                     value={query} 
                     handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {setQuery(e.target.value)}}
                 />
-                <Button type={'submit'} text={'Search'}/>
-            </form>
+                <Button type={'submit'} text={'Search'} width={'w-full'}/>
+                </form>
 
+
+
+                <div className='flex flex-col'>
+                {
+                    songs.map((song) => 
+
+                    <>
+                        <button onClick={() => handleSelectedSong(song)} className='my-8 border-2 rounded-xl'>
+                            <p>Artist: {song.track.artist_name}</p>
+                            <p>Song: {song.track.track_name}</p>
+                            <p>Album: {song.track.album_name}</p>
+                        </button>
+                            
+                    </>)
+                }
+                </div>
+            
+                </>
+                :
+                <>
+                    <button onClick={() => setIsSongShown(!isSongShown)}>Back</button>
+
+                    {song.lyrics.split('\n').map(line => <>
+                        <p className='h-8'>{line}</p>
+
+                    </>)}
+                
+                </>
+
+
+            }
+            
+            
+        
         </div>
+        
+  
+       
     );
 }
 

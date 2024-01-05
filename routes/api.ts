@@ -15,7 +15,6 @@ const fetch = require('node-fetch').default
 
 
 router.post('/search', async (req, res) => {
-    console.log(req.body)
     const data = await handleSearch(req.body.searchQuery);
     res.json({ status: 200, data: data });
 });
@@ -48,7 +47,8 @@ router.post('/quicksearch', async (req, res) => {
 });
 
 router.post('/selected', async (req, res) => {
-    const scrapeURL = req.body.selectedSong.result.url;
+    //const scrapeURL = req.body.selectedSong.result.url;
+    const scrapeURL = req.body.url;
     const lyrics = await getLyrics(scrapeURL);
 
     res.json({ status: 200, lyrics: lyrics });
