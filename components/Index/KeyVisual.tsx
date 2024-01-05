@@ -80,6 +80,7 @@ function KeyVisual() {
           { 
             quizStage == 5 ? <>
             <h1 className='text-4xl font-bold mt-24' >Starte jetzt Lyrics in einer anderen Sprache zu verstehen!</h1>
+            {/* @ts-ignore */}
             <div class="ml-embedded" data-form="NViGyf"></div>
             <Script>{`
     (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
