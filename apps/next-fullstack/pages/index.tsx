@@ -17,15 +17,15 @@ function Index() {
     useEffect(() => {
         const listen = onAuthStateChanged(auth, async (user) => {
             if (user) {
-                console.log('Logged in Request plan');
+                
                 //@ts-ignore
-                const url = `${root}/payment/plan?token=${user.accessToken}`;
-                console.log(url);
-                const json = await (await fetch(url)).json()
+                // const url = `${root}/payment/plan?token=${user.accessToken}`;
+                // console.log(url);
+                // const json = await (await fetch(url)).json()
         
-                console.log('Checked Plan');
-                console.log(json);
-                json.subscriptionPlan == 'free' ? router.push('/onboarding/plans') : router.push('/settings');
+                // console.log('Checked Plan');
+                // console.log(json);
+                // json.subscriptionPlan == 'free' ? router.push('/onboarding/plans') : router.push('/settings');
             }
         });
         return () => {

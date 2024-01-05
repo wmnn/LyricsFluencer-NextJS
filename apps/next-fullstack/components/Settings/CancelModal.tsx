@@ -12,18 +12,23 @@ function CancelModal({setIsDeleteAccountClicked}) {
   const handleDelete = async () => {
     const listen = onAuthStateChanged(auth, async (user) => {
       if (user){
-        fetch(root + `/payment/account?token=${user.accessToken}`, {
-          method: "DELETE",       
-        })
-          .then(res => res.json())
-          .then(json => {
-            console.log(json)
-            if (json.status == 200){
-              userSignOut()
-              router.push("/")
-            }
+        //Uncomment it if payment is active
+        // fetch(root + `/payment/account?token=${user.accessToken}`, {
+        //   method: "DELETE",       
+        // })
+        //   .then(res => res.json())
+        //   .then(json => {
+        //     console.log(json)
+        //     if (json.status == 200){
+        //       userSignOut()
+        //       router.push("/")
+        //     }
 
-        })
+        // })
+
+        //Delte this if payment is active
+        userSignOut()
+        router.push("/")
     }
     })
 

@@ -11,11 +11,10 @@ function Login() {
   
     const handleSignIn = (e) => {
       e.preventDefault();
-      signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
           console.log("Logged in" + userCredential.user.email)
           //setUserContext(userCredential.user)
-          router.push("/onboarding/plans")
+          router.push("/")
       }).catch((error) => {
           console.log(error)
       })

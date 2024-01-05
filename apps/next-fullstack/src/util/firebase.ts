@@ -1,15 +1,14 @@
 import {initializeApp} from 'firebase/app';
 import {getAuth} from 'firebase/auth';
 
-const config = {
-  apiKey: "AIzaSyDiYAfq9keMeXKRZxYSdnUtWwgPJCXR6YM",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORA GE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "1:193160037681:ios:dc03ee3574c5e386bd9c10",
-  measurementId: "YOUR_MEASUREMENT_ID"
+const firebaseConfig = {
+  apiKey: "AIzaSyC_Ssvh1CMWtty0h1BMF2OUWmF0hkmC-t8",
+  authDomain: "lyricsfluencer.firebaseapp.com",
+  projectId: "lyricsfluencer",
+  storageBucket: "lyricsfluencer.appspot.com",
+  messagingSenderId: "274157526278",
+  appId: "1:274157526278:web:6b5158bcd01410c2a69287"
 };
 
-const app = initializeApp(config);
+const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { getFirestore } from 'firebase-admin/firestore'
-import serviceAccount from './firebaseServiceAccount.json'
+import serviceAccount from '@lyricsfluencer/firebaseServiceAccount.json'
 import admin from 'firebase-admin';
 
 admin.initializeApp({

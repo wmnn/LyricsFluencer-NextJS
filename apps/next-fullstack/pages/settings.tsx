@@ -18,13 +18,13 @@ function Settings() {
         const listen = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 //@ts-ignore
-                fetch(`${root}/payment/plan?token=${user.accessToken}`)
-                    .then((res) => res.json())
-                    .then((json) => {
-                        console.log('Checked Plan');
-                        setPlan(json.subscriptionPlan);
-                        setSubscriptionStatus(json.subscriptionStatus);
-                    });
+                // fetch(`${root}/payment/plan?token=${user.accessToken}`)
+                //     .then((res) => res.json())
+                //     .then((json) => {
+                //         console.log('Checked Plan');
+                //         setPlan(json.subscriptionPlan);
+                //         setSubscriptionStatus(json.subscriptionStatus);
+                // });
             } else {
                 router.push('/');
             }
