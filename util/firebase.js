@@ -1,15 +1,16 @@
-const { getFirestore } = require('firebase-admin/firestore')
+//@ts-nocheck
+import { getFirestore } from 'firebase-admin/firestore'
 const serviceAccount = require('./firebaseServiceAccount.json')
-const admin = require('firebase-admin');
+import admin from 'firebase-admin';
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
 });
 
-const db = getFirestore()
+export const db = getFirestore()
 
 
-async function verifyToken(token){
+export async function verifyToken(token){
     try{
         const decodeValue = await admin.auth().verifyIdToken(token);
         if (decodeValue) {
@@ -22,7 +23,7 @@ async function verifyToken(token){
 
     }
 }
-async function deleteUser(uid){
+export async function deleteUser(uid){
     ref = db.collection("users").doc(uid)
     deleteDocumentAndSubcollections(ref)
     ref = db.collection("flashcards").doc(uid)
@@ -49,5 +50,3 @@ async function deleteDocumentAndSubcollections(ref) {
 
     
 }
-
-module.exports = {admin, db, verifyToken, deleteUser};

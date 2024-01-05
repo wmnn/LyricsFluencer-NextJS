@@ -4,3 +4,4 @@
 util/firebaseServiceAccount.json
 /.next
 .DS_Store
+./out/

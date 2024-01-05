@@ -1,10 +1,20 @@
-const express = require("express");
+//@ts-nocheck
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import 'dotenv/config';
+import apiRoutes from './routes/api.js';
+import paymentRoutes from './routes/payment.js';
+import cookieParser from 'cookie-parser';
+// import fs from 'fs';
+
+// const express = require("express");
 const next = require("next");
-const cookieParser = require('cookie-parser');
-const apiRoutes = require("./routes/api.js");
-const paymentRoutes = require("./routes/payment.js");
-const cors = require ("cors");
-require('dotenv').config()
+// const cookieParser = require('cookie-parser');
+// const apiRoutes = require("./routes/api.js");
+// const paymentRoutes = require("./routes/payment.js");
+// const cors = require ("cors");
+// require('dotenv').config()
 
 const PORT = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== "production";

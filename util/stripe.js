@@ -1,10 +1,11 @@
-const Stripe = require("stripe");
+//@ts-nocheck
+import Stripe from "stripe";
 //export in order to only create this one time and import it in other files
 const stripe = Stripe(process.env.STRIPE_SECRET, {
 	apiVersion: "2020-08-27"
 })
 
-const createStripeCustomer = async (email) => {
+export async function createStripeCustomer(email) {
     const customer = await stripe.customers.create(
         {
             email,
@@ -17,7 +18,7 @@ const createStripeCustomer = async (email) => {
     return customer.id
 }
 
-const createStripeSession = async (price_id, success_url, customer_id) => {
+export async function createStripeSession(price_id, success_url, customer_id) {
     const session = await stripe.checkout.sessions.create({
         mode: "subscription", //or "payment" for single payment
         payment_method_types: ["card"],
@@ -35,13 +36,13 @@ const createStripeSession = async (price_id, success_url, customer_id) => {
     return session.url
 }
 
-const getStripeProducts = async () => {
+export async function getStripeProducts() {
     const prices = await stripe.prices.list({
         apiKey: process.env.STRIPE_SECRET,
     });
     return prices
 }
-const verifyStripeSubscription = async (costumer_id) => {
+export async function verifyStripeSubscription (costumer_id) {
     const subscriptions = await stripe.subscriptions.list(
         {
             customer: costumer_id,
@@ -54,4 +55,3 @@ const verifyStripeSubscription = async (costumer_id) => {
     )
     return subscriptions
 }
-module.exports={createStripeSession, getStripeProducts, createStripeCustomer, verifyStripeSubscription}
