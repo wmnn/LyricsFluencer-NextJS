@@ -1,5 +1,5 @@
-import Explaination from './Index/Explaination.jsx'
-import Reasons from './Index/Reasons.jsx'
-import KeyVisual from './Index/KeyVisual.jsx'
+import Explaination from './Index/Explaination'
+import Reasons from './Index/Reasons'
+import KeyVisual from './Index/KeyVisual'
 
-export { Explaination, Reasons, KeyVisual}
+export { Explaination, Reasons, KeyVisual }
