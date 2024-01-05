@@ -2,4 +2,4 @@
 /node_modules
 .next/cache
 util/firebaseServiceAccount.json
-/.nextnode_modules/
+/.next
