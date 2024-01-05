@@ -5,7 +5,6 @@ import { Reasons, Explaination, KeyVisual } from '../components';
 import { useRouter } from "next/router";
 import Link from 'next/link';
 import {root} from '../staticData'
-import axios from 'axios'
 
 function Index() {
   const router = useRouter()

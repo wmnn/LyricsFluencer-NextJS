@@ -6,7 +6,6 @@ import {auth} from "../src/util/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from "next/router";
 import {root} from '../staticData'
-import axios from 'axios'
 
 function Settings() {
   const [plan, setPlan] = useState("") 
