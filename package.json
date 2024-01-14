@@ -6,7 +6,8 @@
         "node": "16.x"
     },
     "scripts": {
-        "dev": "pnpm --filter @lyricsfluencer/backend run dev"
+        "dev": "pnpm --filter @lyricsfluencer/backend run dev",
+        "go": "pnpm --filter @lyricsfluencer/go run dev"
     },
     "keywords": [],
     "author": "",
