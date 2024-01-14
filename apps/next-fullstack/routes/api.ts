@@ -1,14 +1,7 @@
-//@ts-nocheck
-//@ts-ignore
-// import express from 'express'
 const express = require('express')
 const router = express.Router()
 const musixmatch = require('@lyricsfluencer/musixmatch')
-
-//@ts-ignore
-// const fetch = (...args) =>
-//     import('node-fetch').then(({ default: fetch }) => fetch(...args));
-
+require('dotenv').config()
 
 router.post('/search', async (req, res) => {
     const data = await musixmatch.handleSearch(req.body.searchQuery);
@@ -45,9 +38,10 @@ router.post('/quicksearch', async (req, res) => {
 router.post('/selected', async (req, res) => {
     //const scrapeURL = req.body.selectedSong.result.url;
     const scrapeURL = req.body.url;
+    const targetLanguage = req.body.targetLanguage
     const lyrics = await musixmatch.getLyrics(scrapeURL);
-
-    res.json({ status: 200, lyrics: lyrics });
+    const translation = await handleTranslate(lyrics, targetLanguage)
+    res.json({ status: 200, lyrics, translation});
 });
 
 //  return router;
@@ -55,32 +49,21 @@ router.post('/selected', async (req, res) => {
 
 
 async function handleTranslate(text, targetLanguage) {
-    var translatedLyrics;
-
-    const data = {
-        q: text,
-        key: process.env.GOOGLETRANSLATEAPIKEY,
-        target: targetLanguage,
-        format: 'text',
-    };
-    //@ts-ignore
-    const searchParams = new URLSearchParams(data).toString();
-
-    await fetch('https://translation.googleapis.com/language/translate/v2', {
+ 
+    const res = await (await fetch('https://translation.googleapis.com/language/translate/v2', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: searchParams,
-    })
-        .then((res) => res.json())
-        .then((res) => {
-            //console.log(res.data.translations[0])
-            translatedLyrics = res.data.translations[0].translatedText;
-        })
-        .catch((err) => console.error(err));
-
-    return translatedLyrics;
+        body: new URLSearchParams({
+            q: text,
+            key: process.env.GOOGLETRANSLATEAPIKEY,
+            target: targetLanguage,
+            format: 'text',
+        }).toString(),
+    })).json()
+    
+    return res.data.translations[0].translatedText;
 }
 
 module.exports = router

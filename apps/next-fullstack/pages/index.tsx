@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { auth } from '../src/util/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { root } from '../staticData';
+import { languages } from '../staticData';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
@@ -13,6 +12,8 @@ function Index() {
     const [songs, setSongs] = useState([]);
     const [isSongShown, setIsSongShown] = useState(false);
     const [song, setSong]: any = useState({});
+    const [targetLanguage, setTargetLanguage] = useState('de');
+    const [isSelectLanguagePopupShown, setIsSelectLanguagePopupShown] = useState(false);
 
     useEffect(() => {
         const listen = onAuthStateChanged(auth, async (user) => {
@@ -47,37 +48,61 @@ function Index() {
             },
         })).json()
 
-        console.log(data);
-
         setSongs(data.message.body.track_list);
     }
 
     async function handleSelectedSong(song) {
-        console.log(song)
+        setSong(song);
 
         const data = await (await fetch('/api/selected', {
             method: 'POST',
             body: JSON.stringify({
-                url: song.track.track_share_url
+                url: song.track.track_share_url,
+                targetLanguage: targetLanguage
             }),
             headers: {
                 "Content-Type": "application/json",
             },
         })).json()
 
-        console.log(data);
-
         if (data.lyrics) {
-            setSong(data);
+            setSong({
+                ...song,
+                ...data
+            });
             setIsSongShown(!isSongShown);
         }
-    
+
+        console.log(song);
+        console.log(data);
+    }
+
+    async function handleSelectedLanguage(lang) {
+        setTargetLanguage(lang.language)
+        setIsSelectLanguagePopupShown(false);
     }
 
     return (
 
         <div className='flex justify-center flex-col p-8'>
             { !isSongShown ? <>
+
+                <label>Target language</label>
+                <Button 
+                    type="button" 
+                    text={languages.filter((lang) => lang.language == targetLanguage)[0].name}
+                    handleClick={() => setIsSelectLanguagePopupShown((prev) => !prev)}
+                />
+
+                {
+                    isSelectLanguagePopupShown ? <>
+                        {languages.map((lang, i) => 
+                            <button onClick={() => handleSelectedLanguage(lang)} className='my-4 text-l'>
+                                {lang.name}
+                            </button>
+                        )}
+                    </> : ''
+                }
 
                 <form onSubmit={handleSearch} className=''>
                 <label>Search for Song</label>
@@ -93,21 +118,19 @@ function Index() {
 
                 <div className='flex flex-col'>
                 {
-                    songs.map((song) => 
-
-                    <>
-                        <button onClick={() => handleSelectedSong(song)} className='my-8 border-2 rounded-xl'>
+                    songs.map((song, i) => 
+                        <button onClick={() => handleSelectedSong(song)} className='my-8 border-2 rounded-xl' key={i}>
                             <p>Artist: {song.track.artist_name}</p>
                             <p>Song: {song.track.track_name}</p>
                             <p>Album: {song.track.album_name}</p>
                         </button>
-                            
-                    </>)
+                    )
                 }
                 </div>
             
                 </>
                 :
+                //Song is shown
                 <>
                     <button onClick={() => setIsSongShown(!isSongShown)} className="my-8">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
@@ -125,12 +148,8 @@ function Index() {
 
             }
             
-            
-        
         </div>
         
-  
-       
     );
 }
 
