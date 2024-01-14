@@ -9,11 +9,13 @@ import Button from '../components/Button';
 function Index() {
     const router = useRouter();
     const [query, setQuery] = useState('');
-    const [songs, setSongs] = useState([]);
+    const [songs, setSongs] = useState<Song[]>([]);
+    const [song, setSong] = useState<Song>({});
     const [isSongShown, setIsSongShown] = useState(false);
-    const [song, setSong]: any = useState({});
     const [targetLanguage, setTargetLanguage] = useState('de');
     const [isSelectLanguagePopupShown, setIsSelectLanguagePopupShown] = useState(false);
+    const [lyrics, setLyrics] = useState([]);
+    const [translation, setTranslation] = useState([]);
 
     useEffect(() => {
         const listen = onAuthStateChanged(auth, async (user) => {
@@ -52,8 +54,6 @@ function Index() {
     }
 
     async function handleSelectedSong(song) {
-        setSong(song);
-
         const data = await (await fetch('/api/selected', {
             method: 'POST',
             body: JSON.stringify({
@@ -65,16 +65,12 @@ function Index() {
             },
         })).json()
 
-        if (data.lyrics) {
-            setSong({
-                ...song,
-                ...data
-            });
+        if (data.lyrics && data.translation) {
+            setSong(song);
+            setLyrics(data.lyrics.split('\n'))
+            setTranslation(data.translation.split('\n'))
             setIsSongShown(!isSongShown);
         }
-
-        console.log(song);
-        console.log(data);
     }
 
     async function handleSelectedLanguage(lang) {
@@ -90,7 +86,7 @@ function Index() {
                 <label>Target language</label>
                 <Button 
                     type="button" 
-                    text={languages.filter((lang) => lang.language == targetLanguage)[0].name}
+                    text={languages.filter((lang) => lang.code == targetLanguage)[0].name}
                     handleClick={() => setIsSelectLanguagePopupShown((prev) => !prev)}
                 />
 
@@ -138,11 +134,18 @@ function Index() {
                         </svg>
                     </button>
 
-                    {song.lyrics.split('\n').map(line => <>
-                        <p className='h-8'>{line}</p>
+            
+                    {lyrics.length == translation.length ? <>
+                        {lyrics.map((line, i) => {
 
-                    </>)}
-                
+                            return <>
+                                 <p className='h-8'>{lyrics[i]}</p>
+                                 <p className='h-8 text-yellow-600'>{translation[i]}</p>
+                            </>
+
+                        })}
+                    </>
+                    : 'Some error occured'}            
                 </>
 
 

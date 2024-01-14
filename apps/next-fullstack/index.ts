@@ -1,8 +1,9 @@
 //@ts-nocheck
 import express from 'express';
 import cors from 'cors';
-import 'dotenv/config';
 import cookieParser from 'cookie-parser';
+import { resolve } from 'path'
+require('dotenv').config({path: resolve(__dirname, '../../.env')})
 
 const next = require('next');
 const apiRoutes = require('./routes/api.ts');
