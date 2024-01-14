@@ -19,7 +19,7 @@ func main() {
 	loadEnv()
 
 	e := echo.New()
-	e.HideBanner = false
+	e.HideBanner = true
 	e.HidePort = true
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
@@ -29,6 +29,7 @@ func main() {
 	if port == "" {
 		port = "3000"
 	}
+	log.Println("Starting server on http://localhost:" + port)
 	e.Logger.Fatal(e.Start(":" + port))
 
 }
