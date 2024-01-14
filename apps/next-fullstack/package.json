@@ -39,7 +39,8 @@
     "@lyricsfluencer/firebase": "workspace:*",
     "@lyricsfluencer/paypal": "workspace:*",
     "@lyricsfluencer/stripe": "workspace:*",
-    "@lyricsfluencer/musixmatch" : "workspace:*"
+    "@lyricsfluencer/musixmatch" : "workspace:*",
+    "lyricsfluencer" : "workspace:*"
   },
   "devDependencies": {
     "@types/react": "18.2.46",
