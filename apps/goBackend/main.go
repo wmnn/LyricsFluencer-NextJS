@@ -1,11 +1,13 @@
 package main
 
 import (
-	"net/http"
-	"github.com/labstack/echo/v4"
-	"github.com/joho/godotenv"
+	"context"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
+	"github.com/labstack/echo/v4"
+	"github.com/wmnn/goLyricsFluencer/templates"
 )
 
 func loadEnv() {
@@ -22,13 +24,17 @@ func main() {
 	e.HideBanner = true
 	e.HidePort = true
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
+		component := templates.Index()
+		return component.Render(context.Background(), c.Response().Writer)
 	})
-	
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
 	}
+	e.Static("/static", "static")
+	e.Static("/css", "css")
+
 	log.Println("Starting server on http://localhost:" + port)
 	e.Logger.Fatal(e.Start(":" + port))
 

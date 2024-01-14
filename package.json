@@ -7,7 +7,7 @@
     },
     "scripts": {
         "dev": "pnpm --filter @lyricsfluencer/backend run dev",
-        "go": "pnpm --filter @lyricsfluencer/go run dev"
+        "go": "pnpm --filter @lyricsfluencer/go run build"
     },
     "keywords": [],
     "author": "",

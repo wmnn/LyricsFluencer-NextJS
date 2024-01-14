@@ -3,6 +3,7 @@ module github.com/wmnn/goLyricsFluencer
 go 1.21.3
 
 require (
+	github.com/a-h/templ v0.2.513
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.11.4
 )
@@ -15,6 +16,8 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/net v0.19.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 )
+
+replace github.com/wmnn/goLyricsFluencer/templates => ./templates

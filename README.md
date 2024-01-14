@@ -6,3 +6,7 @@
 ### 5. Use node 16
 ### 6. Run `pnpm install`, install if not available
 ### 7. Run `pnpm run dev`
+
+
+### How to run the go backend
+`pnpm run go`
