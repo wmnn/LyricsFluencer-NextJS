@@ -1,4 +1,6 @@
-const { JSDOM } = require('jsdom')
+import { JSDOM } from 'jsdom'
+//@ts-ignore
+import { env } from '@lyricsfluencer/env'
 
 async function getHTML(URL) {
     var res = await fetch(URL, {
@@ -7,10 +9,10 @@ async function getHTML(URL) {
     return await res.text();
 }
 
-async function handleSearch(searchQuery) {
+export async function handleSearch(searchQuery) {
     var returnedData;
     await fetch(
-        `https://api.musixmatch.com/ws/1.1/track.search?apikey=4429a9866ca299e3461a53362d9bc840&page_size=1&q_track_artist=${searchQuery}&s_track_rating=desc&page_size=10`,{
+        `https://api.musixmatch.com/ws/1.1/track.search?apikey=${env.MUSIXMATCH_API_KEY}&page_size=1&q_track_artist=${searchQuery}&s_track_rating=desc&page_size=10`,{
             method: 'GET',
         }
     )
@@ -23,8 +25,7 @@ async function handleSearch(searchQuery) {
     return returnedData;
 }
 
-async function getLyrics(URL) {
-    //"https://www.musixmatch.com/de/songtext/Fetty-Wap/Trap-Queen"
+export async function getLyrics(URL) {
     const html = await getHTML(URL);
     const dom = new JSDOM(html);
     const document = dom.window.document;
@@ -66,8 +67,4 @@ async function getLyrics(URL) {
 
         return span.innerHTML;
     }
-}
-module.exports = {
-    handleSearch,
-    getLyrics,
 }

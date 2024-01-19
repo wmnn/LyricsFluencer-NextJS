@@ -4,18 +4,20 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { resolve } from 'path'
 require('dotenv').config({path: resolve(__dirname, '../../.env')})
+import { env } from '@lyricsfluencer/env'
 
 const next = require('next');
 const apiRoutes = require('./routes/api.ts');
 
-const PORT = process.env.PORT || 3000;
+const PORT = env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-app.prepare()
-    .then(() => {
+try {
+    (async () => {
+        await app.prepare()
         const server = express();
 
         server.use(cors({ origin: process.env.ROOT, credentials: true }));
@@ -39,8 +41,13 @@ app.prepare()
             if (err) throw err;
             console.log(`> Ready on http://localhost:${PORT}`);
         });
-    })
-    .catch((ex) => {
-        console.error(ex.stack);
-        process.exit(1);
-    });
+
+    })()
+
+} catch(e) {
+    console.error(ex.stack);
+    process.exit(1);
+};
+
+    
+    

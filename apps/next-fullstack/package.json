@@ -40,6 +40,7 @@
     "@lyricsfluencer/paypal": "workspace:*",
     "@lyricsfluencer/stripe": "workspace:*",
     "@lyricsfluencer/musixmatch" : "workspace:*",
+    "@lyricsfluencer/env" : "workspace:*",
     "lyricsfluencer" : "workspace:*"
   },
   "devDependencies": {

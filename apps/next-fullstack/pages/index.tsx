@@ -114,7 +114,7 @@ function Index() {
 
                 <div className='flex flex-col'>
                 {
-                    songs.map((song, i) => 
+                    songs?.map((song, i) => 
                         <button onClick={() => handleSelectedSong(song)} className='my-8 border-2 rounded-xl' key={i}>
                             <p>Artist: {song.track.artist_name}</p>
                             <p>Song: {song.track.track_name}</p>
@@ -136,7 +136,7 @@ function Index() {
 
             
                     {lyrics.length == translation.length ? <>
-                        {lyrics.map((line, i) => {
+                        {lyrics?.map((line, i) => {
 
                             return <>
                                  <p className='h-8'>{lyrics[i]}</p>
