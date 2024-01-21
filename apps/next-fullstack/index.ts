@@ -2,11 +2,12 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import next from 'next';
 import { resolve } from 'path'
-require('dotenv').config({path: resolve(__dirname, '../../.env')})
+import dotenv from 'dotenv'
+dotenv.config({path: resolve(__dirname, '../../.env')})
 import { env } from '@lyricsfluencer/env'
 
-const next = require('next');
 const apiRoutes = require('./routes/api.ts');
 
 const PORT = env.PORT || 3000;
