@@ -6,8 +6,7 @@ import { resolve } from 'path'
 import dotenv from 'dotenv'
 dotenv.config({path: resolve(__dirname, '../../.env')})
 import { env } from '@lyricsfluencer/env'
-//@ts-ignore
-import apiRoutes from './routes/api.ts'
+import apiRoutes from './routes/api'
 
 const PORT = env.PORT || 3000;
 const dev = env.NODE_ENV !== 'production';
