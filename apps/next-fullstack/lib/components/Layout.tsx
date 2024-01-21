@@ -3,7 +3,7 @@ import { AiOutlineMenu } from "react-icons/ai" //IONIICONS
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import {auth} from '../src/util/firebase'
+import {auth} from '../util/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { signOut } from 'firebase/auth'
 

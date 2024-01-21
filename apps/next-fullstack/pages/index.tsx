@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from '../src/util/firebase';
+import { auth } from '../lib/util/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { languages } from '../staticData';
-import Input from '../components/Input';
-import Button from '../components/Button';
+import { Button, Input } from '../lib/components/';
 
 function Index() {
     const router = useRouter();
@@ -18,6 +17,7 @@ function Index() {
     const [translation, setTranslation] = useState([]);
 
     useEffect(() => {
+        console.log(languages)
         const listen = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 
@@ -74,7 +74,7 @@ function Index() {
     }
 
     async function handleSelectedLanguage(lang) {
-        setTargetLanguage(lang.language)
+        setTargetLanguage(lang.code)
         setIsSelectLanguagePopupShown(false);
     }
 
@@ -86,14 +86,14 @@ function Index() {
                 <label>Target language</label>
                 <Button 
                     type="button" 
-                    text={languages.filter((lang) => lang.code == targetLanguage)[0].name}
+                    text={languages.filter((lang) => lang.code == targetLanguage)[0]?.name}
                     handleClick={() => setIsSelectLanguagePopupShown((prev) => !prev)}
                 />
 
                 {
                     isSelectLanguagePopupShown ? <>
                         {languages.map((lang, i) => 
-                            <button onClick={() => handleSelectedLanguage(lang)} className='my-4 text-l'>
+                            <button onClick={() => handleSelectedLanguage(lang)} className='my-4 text-l' key={i}>
                                 {lang.name}
                             </button>
                         )}

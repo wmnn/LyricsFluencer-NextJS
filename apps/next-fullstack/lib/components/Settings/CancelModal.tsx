@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import Button from '../Button'
-import {auth} from "../../src/util/firebase";
+import {auth} from "../../util/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
-import {root} from '../../staticData'
+import {root} from '../../../staticData'
 import { useRouter } from "next/router";
 import { signOut } from 'firebase/auth'
 

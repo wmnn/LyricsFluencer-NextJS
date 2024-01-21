@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../src/util/firebase'
+import { auth } from '../lib/util/firebase'
 import { useRouter } from "next/router";
 
 function Login() {

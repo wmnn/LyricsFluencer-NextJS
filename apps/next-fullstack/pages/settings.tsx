@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import CancelModal from '../components/Settings/CancelModal';
-import CancelSubscriptionModal from '../components/Settings/CancelSubscriptionModal';
-import Button from '../components/Button';
-import { auth } from '../src/util/firebase';
+import CancelModal from '../lib/components/Settings/CancelModal';
+import CancelSubscriptionModal from '../lib/components/Settings/CancelSubscriptionModal';
+import { Button } from '../lib/components/';
+import { auth } from '../lib/util/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import { root } from '../staticData';
+//import { root } from '../staticData';
 
 function Settings() {
     const [plan, setPlan] = useState('');

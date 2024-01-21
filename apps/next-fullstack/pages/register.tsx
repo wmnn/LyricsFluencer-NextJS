@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { auth } from '../src/util/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../lib/util/firebase';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import Button from '../components/Button';
-import Input from '../components/Input';
-import { onAuthStateChanged } from 'firebase/auth';
+import { Button, Input } from '../lib/components/';
 
 function Register() {
     const router = useRouter();

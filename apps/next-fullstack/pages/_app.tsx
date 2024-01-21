@@ -2,8 +2,8 @@ import "./index.css";
 import React, { useState } from "react";
 import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
-import Layout from '../components/Layout'
-import UserContext from '../components/Context/UserContext'
+import Layout from '../lib/components/Layout'
+import UserContext from '../lib/components/Context/UserContext'
 import type { AppProps } from 'next/app'
  
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
