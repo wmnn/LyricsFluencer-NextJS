@@ -1,4 +1,3 @@
-//@ts-nocheck
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -7,11 +6,11 @@ import { resolve } from 'path'
 import dotenv from 'dotenv'
 dotenv.config({path: resolve(__dirname, '../../.env')})
 import { env } from '@lyricsfluencer/env'
-
-const apiRoutes = require('./routes/api.ts');
+//@ts-ignore
+import apiRoutes from './routes/api.ts'
 
 const PORT = env.PORT || 3000;
-const dev = process.env.NODE_ENV !== 'production';
+const dev = env.NODE_ENV !== 'production';
 
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -21,7 +20,7 @@ try {
         await app.prepare()
         const server = express();
 
-        server.use(cors({ origin: process.env.ROOT, credentials: true }));
+        server.use(cors({ origin: env.ROOT, credentials: true }));
         server.use(cookieParser());
         server.use(express.json());
 
@@ -30,9 +29,7 @@ try {
             handle(req, res);
         });
 
-        //server.use("/api", apiRoutes(server));
-        server.use("/api", apiRoutes);
-        // server.use("/payment", paymentRoutes(server));
+        server.use('/api', apiRoutes);
 
         server.get('*', (req, res) => {
             return handle(req, res);
@@ -46,7 +43,7 @@ try {
     })()
 
 } catch(e) {
-    console.error(ex.stack);
+    console.error(e.stack);
     process.exit(1);
 };
 
