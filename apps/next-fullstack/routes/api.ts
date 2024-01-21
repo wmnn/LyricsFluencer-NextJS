@@ -2,7 +2,8 @@ const express = require('express')
 const path = require('path')
 const router = express.Router()
 const musixmatch = require('@lyricsfluencer/musixmatch')
-require('dotenv').config({path: path.resolve(__dirname, '../../../.env')})
+// @ts-ignore  
+import { handleTranslate } from '@lyricsfluencer/googletranslate'
 
 router.post('/search', async (req, res) => {
     const data = await musixmatch.handleSearch(req.body.searchQuery);
@@ -41,26 +42,5 @@ router.post('/selected', async (req, res) => {
     res.json({ status: 200, lyrics, translation});
 });
 
-
-async function handleTranslate(text, targetLanguage) {
-    try {
-        const res = await (await fetch('https://translation.googleapis.com/language/translate/v2', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                q: text,
-                key: process.env.GOOGLETRANSLATEAPIKEY,
-                target: targetLanguage,
-                format: 'text',
-            }).toString(),
-        })).json()
-        
-        return res.data.translations[0].translatedText;
-    } catch (_) {
-        return null
-    }
-}
 
 module.exports = router

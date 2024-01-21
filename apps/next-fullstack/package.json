@@ -41,6 +41,7 @@
     "@lyricsfluencer/stripe": "workspace:*",
     "@lyricsfluencer/musixmatch" : "workspace:*",
     "@lyricsfluencer/env" : "workspace:*",
+    "@lyricsfluencer/googletranslate" : "workspace:*",
     "lyricsfluencer" : "workspace:*"
   },
   "devDependencies": {

@@ -25,6 +25,9 @@ importers:
       '@lyricsfluencer/firebase':
         specifier: workspace:*
         version: link:../../packages/firebase
+      '@lyricsfluencer/googletranslate':
+        specifier: workspace:*
+        version: link:../../packages/googleTranslate
       '@lyricsfluencer/musixmatch':
         specifier: workspace:*
         version: link:../../packages/musixmatch
@@ -126,6 +129,12 @@ importers:
   packages/firebase: {}
 
   packages/genius: {}
+
+  packages/googleTranslate:
+    dependencies:
+      '@lyricsfluencer/env':
+        specifier: workspace:*
+        version: link:../env
 
   packages/musixmatch:
     dependencies:
