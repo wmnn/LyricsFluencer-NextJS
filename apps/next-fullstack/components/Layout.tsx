@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineMenu } from "react-icons/ai" //IONIICONS
 import { useRouter } from "next/router";
-import Link from "next/link";
-
-import {auth} from '../util/firebase'
+import { auth } from '@lyricsfluencer/firebase-client'
 import { onAuthStateChanged } from 'firebase/auth'
 import { signOut } from 'firebase/auth'
 

@@ -1,4 +1,4 @@
-import {createContext} from 'react'
+import { createContext } from 'react'
 
 //@ts-ignore
 const UserContext = createContext();

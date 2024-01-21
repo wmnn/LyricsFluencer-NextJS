@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../lib/util/firebase'
+//@ts-ignore
+import { auth } from '@lyricsfluencer/firebase-client';
 import { useRouter } from "next/router";
 
 function Login() {

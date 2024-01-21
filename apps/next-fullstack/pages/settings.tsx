@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import CancelModal from '../lib/components/Settings/CancelModal';
-import CancelSubscriptionModal from '../lib/components/Settings/CancelSubscriptionModal';
-import { Button } from '../lib/components/';
-import { auth } from '../lib/util/firebase';
+import CancelModal from '../components/Settings/CancelModal';
+import CancelSubscriptionModal from '../components/Settings/CancelSubscriptionModal';
+import { Button } from '../components';
+//@ts-ignore
+import { auth } from '@lyricsfluencer/firebase-client';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
 //import { root } from '../staticData';

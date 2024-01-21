@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from '../lib/util/firebase';
+//@ts-ignore
+import { auth } from '@lyricsfluencer/firebase-client';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { languages } from '../staticData';
-import { Button, Input } from '../lib/components/';
+import { Button, Input } from '../components';
 
 function Index() {
     const router = useRouter();
