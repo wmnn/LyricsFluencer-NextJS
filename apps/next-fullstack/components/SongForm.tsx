@@ -8,7 +8,6 @@ function SongForm({ setTargetLanguage }) {
     const [query, setQuery] = useState('');
     const {resultSongsContext, setResultSongsContext}: any = useContext(ResultSongsContext);
     
-
     async function handleSearch(e: React.ChangeEvent<HTMLFormElement>) {
         e.preventDefault();
 
@@ -31,7 +30,7 @@ function SongForm({ setTargetLanguage }) {
 
     return <> 
 
-    <div className="flex flex-col w-[50%] ml-[25%]">
+    <div className="flex flex-col lg:w-[50%] lg:ml-[25%]">
 
         <label className=" text-gray-600">Target language</label>
 
@@ -52,7 +51,15 @@ function SongForm({ setTargetLanguage }) {
                 handleChange={(e: React.ChangeEvent<HTMLInputElement>) => {setQuery(e.target.value)}}
             />
             <div className="mt-4"/>
-            <Button type={'submit'} text={'Search'}/>
+            <Button type={'submit'} text={<>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-[14px] w-[14px]">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <p>Search</p>
+            </>
+            }>
+               
+            </Button>
         </form>
                     
     </div>
