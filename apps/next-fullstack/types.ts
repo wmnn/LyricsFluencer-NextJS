@@ -1,8 +1,8 @@
-interface Song {
+export interface Song {
     [key: string] : any
 }
 
-interface SongContext {
+export interface SongContext {
     isSongShown: boolean,
     lyrics: string[],
     translation: string[],

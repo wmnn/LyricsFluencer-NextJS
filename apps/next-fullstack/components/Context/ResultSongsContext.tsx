@@ -1,6 +1,5 @@
 import { createContext } from 'react'
 
-//@ts-ignore
-const ResultSongsContext = createContext();
+const ResultSongsContext = createContext<any>([]);
 
 export default ResultSongsContext
