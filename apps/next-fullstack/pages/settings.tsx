@@ -68,7 +68,6 @@ function Settings() {
                     <Button
                         text={'Cancel Subscription'}
                         color={'bg-red-600'}
-                        width={'md:w-[40%] w-[80%]'}
                         handleClick={() => setIsCancelClicked(true)}
                     />
                 </>
@@ -81,7 +80,6 @@ function Settings() {
                             <Button
                                 text={'Subscribe'}
                                 color={'bg-green-600'}
-                                width={'md:w-[40%] w-[80%]'}
                                 handleClick={() =>
                                     router.push('/onboarding/plans')
                                 }
@@ -94,7 +92,6 @@ function Settings() {
             <Button
                 text={'Delete Account'}
                 color={'bg-red-600'}
-                width={'md:w-[40%] w-[80%] mt-8'}
                 handleClick={() => setIsDeleteAccountClicked(true)}
             />
 

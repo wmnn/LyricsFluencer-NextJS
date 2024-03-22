@@ -4,7 +4,9 @@ import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
 import Layout from '../components/Layout'
 import UserContext from '../components/Context/UserContext'
+import ResultSongsContext from '../components/Context/ResultSongsContext'
 import type { AppProps } from 'next/app'
+import SongContext from "../components/Context/SongContext";
  
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -16,6 +18,8 @@ type AppPropsWithLayout = AppProps & {
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   const [userContext, setUserContext] = useState(null)
+  const [resultSongsContext, setResultSongsContext] = useState([])
+  const [songContext, setSongContext] = useState({isSongShown: false, lyrics: [], translation: [], song: null})
   
   if(Component.getLayout){
     return (
@@ -24,11 +28,18 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </UserContext.Provider>
     )
   }
+
   return (
     <UserContext.Provider value={{userContext, setUserContext}}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ResultSongsContext.Provider value={{resultSongsContext, setResultSongsContext}}>
+        <SongContext.Provider value={{songContext, setSongContext}}>
+
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+
+        </SongContext.Provider>
+      </ResultSongsContext.Provider>
     </UserContext.Provider>
   )
   

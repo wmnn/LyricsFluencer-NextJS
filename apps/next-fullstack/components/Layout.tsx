@@ -39,67 +39,83 @@ function Header () {
         
         <div className="flex flex-row justify-around items-center p-8">
             <div className="grow basis-0">
-
             </div>
+
             { 
-                currentUser? <>               
-                <div className="grow basis-0 flex flex-col items-center text-center">
-                    <h1 className='text-4xl font-bold'>LyricsFluencer</h1>
-                    <h2 className='text-2xl'>Learn lanugages with music</h2>
-                </div>
+                currentUser ? <>               
+                    <div className="grow basis-0 flex flex-col items-center text-center">
+                        <h1 className='text-xl font-bold'>LyricsFluencer</h1>
+                        <h2 className='text-l'>Learn lanugages with music</h2>
+                    </div>
                 </> : <>
-                <div className="grow basis-0 flex flex-col items-center hover:cursor-pointer text-center" onClick={() => router.push("/")}>
-                <h1 className='text-4xl font-bold'>LyricsFluencer</h1>
-                <h2 className='text-2xl text-center'>Learn lanugages with music on IOS</h2>
-                </div>
+                    <div className="grow basis-0 flex flex-col items-center hover:cursor-pointer text-center" onClick={() => router.push("/")}>
+                        <h1 className='text-xl font-bold'>LyricsFluencer</h1>
+                        <h2 className='text-l'>Learn lanugages with music</h2>
+                    </div>
                 </>
 
             }
             
+            {/* HAMBURGER MENU */}
             <div className="grow basis-0 flex justify-center">
-                <AiOutlineMenu className="hover:cursor-pointer" size="48" onClick={() => setMenu((prev) => !prev)}/>
+                <AiOutlineMenu className="hover:cursor-pointer" size="24" onClick={() => setMenu((prev) => !prev)}/>
             </div>
 
-            {/*
-                This is shown, if a user clicks on the Menu Icon
-            */}
+            {/* This is shown, if a user clicks on the Menu Icon */}
+
             {
-                menu == true ? <div className="absolute h-full bg-white w-[100%] top-[-100%] translate-y-[100%] transition-all transform text-black">
-                    <div className="flex flex-row justify-around items-center p-8">
-                        <div className="grow basis-0">
-                        </div>
-                        <div className="grow basis-0 text-white">
-                            <h1 className='text-6xl font-bold'>LyricsFluencer</h1>
-                            <h2 className='text-2xl'>Learn lanugages with music on IOS</h2>
-                        </div>
-                        <div className="grow basis-0 flex justify-center">
-                            <AiOutlineMenu className="hover:cursor-pointer" size="48" onClick={() => setMenu((prev) => !prev)}/>
-                        </div>
-                    </div>
-                        <ul className="flex flex-col items-center text-2xl space-y-8">
-                            {
-                                currentUser? <>
-                                    <li className="hover:cursor-pointer" onClick={() => {
-                                        router.push("/settings")
-                                        setMenu(false)
-                                    }}>Settings</li>
-                                    <li className="hover:cursor-pointer" onClick={() => {
-                                        userSignOut();
-                                        router.push("/")
-                                        setMenu(false)
-                                    }}>Logout</li>
-                                </>: <>
-                                    {/* <li className="hover:cursor-pointer" onClick={() => handleNavigate("pricing")}>Pricing</li> */}
-                                    <li className="hover:cursor-pointer" onClick={() => handleNavigate('login')}>Login</li>
-                                </>
-                            }
-                        </ul>
-                
-            </div>    :""
+                menu == true ? <Menu
+                    setMenu={setMenu}
+                    currentUser={currentUser}
+                    handleNavigate={handleNavigate}
+                    router={router}
+                    userSignOut={userSignOut}
+                /> :""
             }
         </div>
     
     )
+}
+
+const Menu = ({ setMenu, currentUser, router, userSignOut, handleNavigate }) => {
+    
+    return (
+    <div className="absolute h-full bg-white w-[100%] top-[-100%] translate-y-[100%] transition-all transform text-black">
+        <div className="flex flex-row justify-around items-center p-8">
+
+            <div className="grow basis-0">
+            </div>
+
+            <div className="grow basis-0 text-white">
+                <h1 className='text-xl font-bold'>LyricsFluencer</h1>
+                <h2 className='text-l'>Learn lanugages with music</h2>
+            </div>
+
+            <div className="grow basis-0 flex justify-center">
+                <AiOutlineMenu className="hover:cursor-pointer" size="24" onClick={() => setMenu((prev) => !prev)}/>
+            </div>
+        </div>
+
+        <ul className="flex flex-col items-center text-2xl space-y-8">
+            {
+                currentUser? <>
+                    <li className="hover:cursor-pointer" onClick={() => {
+                        router.push("/settings")
+                        setMenu(false)
+                    }}>Settings</li>
+                    <li className="hover:cursor-pointer" onClick={() => {
+                        userSignOut();
+                        router.push("/")
+                        setMenu(false)
+                    }}>Logout</li>
+                </>: <>
+                    {/* <li className="hover:cursor-pointer" onClick={() => handleNavigate("pricing")}>Pricing</li> */}
+                    <li className="hover:cursor-pointer" onClick={() => handleNavigate('login')}>Login</li>
+                </>
+            }
+        </ul>
+        
+    </div>)
 }
   
 //@ts-ignore
@@ -107,6 +123,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
+      <hr />
       {children}
     </>
   )

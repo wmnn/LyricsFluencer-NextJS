@@ -1,9 +1,9 @@
 import React from 'react'
 
 //@ts-ignore
-function Button({text, type, textColor, color, width, handleClick}) {
+function Button({text, type, textColor, color, handleClick}) {
   return (
-    <button type={type} className={'p-2 text-center text-2xl rounded shadow-xl hover:cursor-pointer ' + (color ? color + " " : "") + (textColor ? "text-" + textColor + " " : "text-white ") + (width ? width + " " : "w-[100%]")} onClick={() => handleClick()}>
+    <button type={type} className={'pl-4 pr-4 pt-2 pb-2 text-lg border-gray-200 border-[1px] hover:bg-gray-200 transition-all w-min text-center rounded-md shadow-xl hover:cursor-pointer ' + (color ? color + " " : "") + (textColor ? "text-" + textColor + " " : "text-white ")} onClick={() => handleClick()}>
         {text}
     </button>
   )
@@ -19,7 +19,6 @@ Button.defaultProps = {
   type: 'button',
   textColor: 'black', 
   color: 'white', 
-  width: 'w-100', 
   handleClick: () => {} 
 };
 
