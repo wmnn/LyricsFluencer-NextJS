@@ -8,8 +8,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.ts",
-    "ts-node": "ts-node --esm ./index.js",
+    "dev": "ts-node --esm ./index.ts",
+    "ts-node": "ts-node --esm ./index.ts",
     "build": "next build",
     "export": "next build && next export",
     "start": "next start"

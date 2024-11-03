@@ -1,7 +1,7 @@
 // @ts-ignore  
 import { env } from '@lyricsfluencer/env'
 
-export async function handleTranslate(text, targetLanguage) {
+export async function handleTranslate(text, targetLanguage): Promise<string[]> {
     try {
         const res = await (await fetch('https://translation.googleapis.com/language/translate/v2', {
             method: 'POST',
@@ -16,8 +16,8 @@ export async function handleTranslate(text, targetLanguage) {
             }).toString(),
         })).json()
         
-        return res.data.translations[0].translatedText;
+        return res.data.translations[0].translatedText.split('\n');
     } catch (_) {
-        return null
+        return []
     }
 }

@@ -4,9 +4,9 @@ import { z } from 'zod';
 
 export const env = createEnv({
     server: {
-        GOOGLETRANSLATEAPIKEY: z.string(),
+        GOOGLETRANSLATEAPIKEY: z.string().optional(),
         MUSIXMATCH_API_KEY: z.string(),
-        PORT: z.string(),
+        PORT: z.string().optional(),
     },
     runtimeEnv: process.env,
 });

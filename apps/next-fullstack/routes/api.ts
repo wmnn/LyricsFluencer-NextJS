@@ -2,11 +2,12 @@ import express from 'express'
 import * as musixmatch from '@lyricsfluencer/musixmatch'
 // @ts-ignore  
 import { handleTranslate } from '@lyricsfluencer/googletranslate'
+import { SelectedSongRequest, SelectedSongResponse } from '../types';
 const router = express.Router()
 
 router.post('/search', async (req, res) => {
-    const data = await musixmatch.handleSearch(req.body.searchQuery);
-    res.json({ status: 200, data: data });
+    const songs = await musixmatch.handleSearch(req.body.searchQuery);
+    res.json({ status: 200, songs });
 });
 
 router.post('/quicksearch', async (req, res) => {
@@ -15,33 +16,35 @@ router.post('/quicksearch', async (req, res) => {
 
         const target = req.body.target
         const query = req.body.searchQuery
-        const data = await musixmatch.handleSearch(query);
-        const artist = data.message.body.track_list[0].track.artist_name;
-        const song = data.message.body.track_list[0].track.track_name;
 
-        const scrapeURL = data.message.body.track_list[0].track.track_share_url.split('?')[0];
-
-        var lyrics = await musixmatch.getLyrics(scrapeURL);
-        const translatedLyrics = await handleTranslate(lyrics, target);
+        const songs = await musixmatch.handleSearch(query);
+        const song = await musixmatch.getLyrics(songs[0]);
+        if (song.lyrics && song.lyrics.length !== 0) {
+            song.translation = await handleTranslate(song.lyrics, target);
+        }
 
         return res.json({
             status: 200,
-            artist: artist,
             song: song,
-            lyrics: lyrics,
-            translatedLyrics: translatedLyrics,
         });
         
     } catch (err) {}
 });
 
 router.post('/selected', async (req, res) => {
-    const scrapeURL = req.body.url;
-    const targetLanguage = req.body.targetLanguage
-    const lyrics = await musixmatch.getLyrics(scrapeURL);
-    console.log(scrapeURL, lyrics)
-    const translation = await handleTranslate(lyrics, targetLanguage)
-    res.json({ status: 200, lyrics, translation});
+    const reqData: SelectedSongRequest = req.body;
+
+    let song = reqData.song
+    const targetLanguage = reqData.targetLanguage
+
+    song = await musixmatch.getLyrics(song);
+    song.translation = await handleTranslate(song.lyrics, targetLanguage)
+
+    const resData: SelectedSongResponse = {
+        status: 200,
+        song
+    }
+    res.json(resData);
 });
 
 

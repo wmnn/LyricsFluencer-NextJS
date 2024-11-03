@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { auth } from '@lyricsfluencer/firebase-client';
 import { onAuthStateChanged } from 'firebase/auth';
 // import { useRouter } from 'next/router';
+import Song from '../components/Song'
 import SongForm from '../components/SongForm'
 import SongContext from '../components/Context/SongContext';
 import SongResults from '../components/SongResults';

@@ -1,6 +1,7 @@
 import { JSDOM } from 'jsdom'
 //@ts-ignore
 import { env } from '@lyricsfluencer/env'
+import { Song } from '../../apps/next-fullstack/types';
 
 async function getHTML(URL) {
     var res = await fetch(URL, {
@@ -9,23 +10,61 @@ async function getHTML(URL) {
     return await res.text();
 }
 
-export async function handleSearch(searchQuery) {
-    var returnedData;
-    await fetch(
-        `https://api.musixmatch.com/ws/1.1/track.search?apikey=${env.MUSIXMATCH_API_KEY}&page_size=1&q_track_artist=${searchQuery}&s_track_rating=desc&page_size=10`,{
-            method: 'GET',
-        }
-    )
-        .then((res) => {
-            return res.json();
+export async function handleSearch(searchQuery): Promise<Song[]> {
+    try {
+        const { message } = await (await fetch(
+            `https://api.musixmatch.com/ws/1.1/track.search?apikey=${env.MUSIXMATCH_API_KEY}&page_size=1&q_track_artist=${searchQuery}&s_track_rating=desc&page_size=10`,{
+                method: 'GET',
+            }
+        )).json();
+    
+        const songs = message.body.track_list;
+
+        return songs.map(({ track }) => {
+
+            return {
+                id: track.commontrack_id,
+                name: track.track_name,
+                artist: track.artist_name,
+                url: track.track_share_url.split('?')[0] ?? '',
+                album: track.album_name ?? ''
+            }
         })
-        .then((res) => {
-            returnedData = res;
-        });
-    return returnedData;
+    
+    } catch (_) {
+        return []
+    }
 }
 
-export async function getLyrics(URL) {
+export async function getLyrics(song: Song) : Promise<Song> {
+    
+    try {
+        song.lyrics = await scrapeLyrics(song.url);
+    } catch (err) {
+        song.lyrics = await callLyricsEndpoint(song);
+    }
+
+    return song;
+}
+async function callLyricsEndpoint(song: Song) : Promise<string[]> {
+
+    try {
+        const res = await (await fetch(
+            `https://api.musixmatch.com/ws/1.1/track.lyrics.get?apikey=${env.MUSIXMATCH_API_KEY}&commontrack_id=${song.id}`,{
+                method: 'GET',
+            }
+        )).json();
+    
+        const lyrics = res.message.body.lyrics.lyrics_body
+    
+        return lyrics.split('\n')
+    } catch (e) {
+        return []
+    }
+}
+
+async function scrapeLyrics(URL): Promise<string[]> {
+
     const html = await getHTML(URL);
     const dom = new JSDOM(html);
     const document = dom.window.document;
@@ -65,8 +104,8 @@ export async function getLyrics(URL) {
         // Replace the inner HTML of the parent div with the span
         parentDiv.innerHTML = span.outerHTML;
 
-        return span.innerHTML;
+        return span.innerHTML.split('\n');
     } else {
-        console.error(`Couldn't scrape musixmatch site.`)
+        throw `Couldn't scrape musixmatch site.`;
     }
 }
