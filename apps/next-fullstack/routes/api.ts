@@ -39,6 +39,7 @@ router.post('/selected', async (req, res) => {
     const scrapeURL = req.body.url;
     const targetLanguage = req.body.targetLanguage
     const lyrics = await musixmatch.getLyrics(scrapeURL);
+    console.log(scrapeURL, lyrics)
     const translation = await handleTranslate(lyrics, targetLanguage)
     res.json({ status: 200, lyrics, translation});
 });

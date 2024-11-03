@@ -36,10 +36,10 @@ function SongResults({ targetLanguage }) {
 
     return <>
     
-    <div className='flex flex-col'>{
+    <div className='flex flex-col gap-2 mt-8'>{
         
         resultSongsContext?.map((song, i) => 
-            <button onClick={() => handleSelectedSong(song)} className='my-8 border-2 rounded-xl lg:w-[50%] lg:ml-[25%]' key={i}>
+            <button onClick={() => handleSelectedSong(song)} className='border-2 rounded-xl lg:w-[50%] lg:ml-[25%] flex flex-col p-2' key={i}>
                 <p>Artist: {song.track.artist_name}</p>
                 <p>Song: {song.track.track_name}</p>
                 <p>Album: {song.track.album_name}</p>

@@ -66,5 +66,7 @@ export async function getLyrics(URL) {
         parentDiv.innerHTML = span.outerHTML;
 
         return span.innerHTML;
+    } else {
+        console.error(`Couldn't scrape musixmatch site.`)
     }
 }
