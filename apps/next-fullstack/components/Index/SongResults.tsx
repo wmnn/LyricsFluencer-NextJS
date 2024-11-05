@@ -1,9 +1,9 @@
 import React, { useContext } from "react"
-import ResultSongsContext from '../components/Context/ResultSongsContext';
-import SongContext from '../components/Context/SongContext';
-import { SelectedSongRequest, SelectedSongResponse, Song } from "../types";
+import ResultSongsContext from '../Context/ResultSongsContext';
+import SongContext from '../Context/SongContext';
+import { SelectedSongRequest, SelectedSongResponse, Song } from "../../types";
 
-function SongResults({ targetLanguage }) {
+function SongResults({ nativeLanguage }) {
 
     const {_, setSongContext}: any = useContext(SongContext);
     const {resultSongsContext, setResultSongsContext}: any = useContext(ResultSongsContext);
@@ -11,7 +11,7 @@ function SongResults({ targetLanguage }) {
     async function handleSelectedSong(song: Song) {
         const requestData : SelectedSongRequest = {
             song,
-            targetLanguage: targetLanguage as string
+            nativeLanguage: nativeLanguage as string
         }
         const res: SelectedSongResponse = await (await fetch('/api/selected', {
             method: 'POST',

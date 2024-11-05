@@ -2,7 +2,7 @@ import "./index.css";
 import React, { useState } from "react";
 import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
-import Layout from '../components/Layout'
+import Layout from '../components/Index/Layout'
 import UserContext from '../components/Context/UserContext'
 import ResultSongsContext from '../components/Context/ResultSongsContext'
 import type { AppProps } from 'next/app'

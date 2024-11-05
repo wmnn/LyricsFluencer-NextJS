@@ -16,11 +16,9 @@ export interface SongContext {
     song: Song | null
 }
 
-
-
 export interface SelectedSongRequest {
     song: Song,
-    targetLanguage: string,
+    nativeLanguage: string,
 }
 export interface SelectedSongResponse {
     status: number,

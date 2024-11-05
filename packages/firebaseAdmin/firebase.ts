@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { getFirestore } from 'firebase-admin/firestore'
-import serviceAccount from '@lyricsfluencer/firebaseServiceAccount.json'
+import serviceAccount from 'lyricsfluencer/firebaseServiceAccount.json'
 import admin from 'firebase-admin';
 
 admin.initializeApp({
@@ -23,15 +23,21 @@ export async function verifyToken(token){
 
     }
 }
+/**
+ * Deletes the firebase user and firestore documents
+ * @param uid user unique id
+ */
 export async function deleteUser(uid){
-    ref = db.collection("users").doc(uid)
+
+    let ref
+    ref = db.collection('users').doc(uid)
     deleteDocumentAndSubcollections(ref)
-    ref = db.collection("flashcards").doc(uid)
+    ref = db.collection('flashcards').doc(uid)
     deleteDocumentAndSubcollections(ref)
 
     admin.auth().deleteUser(uid)
         .then(() => {
-            console.log('User deleted successfully.');
+            console.log(`User ${uid} deleted successfully.`);
         })
         .catch((error) => {
             console.error('Error deleting user:', error);
@@ -39,14 +45,14 @@ export async function deleteUser(uid){
 
 }
 async function deleteDocumentAndSubcollections(ref) {
+    
     // Get all subcollections of the document
     const subcollections = await ref.listCollections();
     // Delete all subcollections recursively
     for (const subcollection of subcollections) {
-      await deleteCollection(subcollection);
+        await deleteCollection(subcollection);
     }
     // Delete the document
     await ref.delete();
-
     
 }

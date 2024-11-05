@@ -1,3 +1,4 @@
+export const root = "http://localhost:3000"
 export const languages = [
     {
         code: 'af',

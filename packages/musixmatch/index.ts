@@ -9,6 +9,31 @@ async function getHTML(URL) {
     });
     return await res.text();
 }
+export async function getPopularSongs(targetLanguageCode: String): Promise<Song[]> {
+    try {
+        const { message } = await (await fetch(
+            `https://api.musixmatch.com/ws/1.1/chart.tracks.get?apikey=${env.MUSIXMATCH_API_KEY}&chart_name=top&page=1&page_size=10&country=${targetLanguageCode}&f_has_lyrics=1`,{
+                method: 'GET',
+            }
+        )).json();
+    
+        const songs = message.body.track_list;
+
+        return songs.map(({ track }) => {
+
+            return {
+                id: track.commontrack_id,
+                name: track.track_name,
+                artist: track.artist_name,
+                url: track.track_share_url.split('?')[0] ?? '',
+                album: track.album_name ?? ''
+            }
+        })
+    
+    } catch (_) {
+        return []
+    }
+}
 
 export async function handleSearch(searchQuery): Promise<Song[]> {
     try {
@@ -41,16 +66,16 @@ export async function getLyrics(song: Song) : Promise<Song> {
     try {
         song.lyrics = await scrapeLyrics(song.url);
     } catch (err) {
-        song.lyrics = await callLyricsEndpoint(song);
+        song.lyrics = await callLyricsEndpoint(song.id);
     }
 
     return song;
 }
-async function callLyricsEndpoint(song: Song) : Promise<string[]> {
+async function callLyricsEndpoint(songId: string) : Promise<string[]> {
 
     try {
         const res = await (await fetch(
-            `https://api.musixmatch.com/ws/1.1/track.lyrics.get?apikey=${env.MUSIXMATCH_API_KEY}&commontrack_id=${song.id}`,{
+            `https://api.musixmatch.com/ws/1.1/track.lyrics.get?apikey=${env.MUSIXMATCH_API_KEY}&commontrack_id=${songId}`,{
                 method: 'GET',
             }
         )).json();

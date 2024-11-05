@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react'
-import ResultSongsContext from './Context/ResultSongsContext';
-import { languages } from '../staticData';
-import { Button, Input } from './'
-import { ManualSearchResponse } from '../types';
+import ResultSongsContext from '../Context/ResultSongsContext';
+import { languages } from '../../staticData';
+import { Button, Input } from '..'
+import { ManualSearchResponse } from '../../types';
 
-function SongForm({ setTargetLanguage }) {
+function SongForm({ setNativeLanguage }) {
 
     const [query, setQuery] = useState('');
     const {_, setResultSongsContext}: any = useContext(ResultSongsContext);
@@ -26,14 +26,14 @@ function SongForm({ setTargetLanguage }) {
     }
 
     async function handleSelectedLanguage(langCode) {
-        setTargetLanguage(langCode)
+        setNativeLanguage(langCode)
     }
 
     return <> 
 
     <div className="flex flex-col lg:w-[50%] lg:ml-[25%]">
 
-        <label className=" text-gray-600">Target language</label>
+        <label className=" text-gray-600">Your native language:</label>
 
         <select name="languages" id="languages" className={'pl-4 pr-4 pt-2 pb-2 text-lg border-gray-200 border-[1px] hover:bg-gray-200 transition-all w-min text-center rounded-md shadow-xl hover:cursor-pointer text-black'} onChange={(e) => handleSelectedLanguage(e.target.value)}>
             {languages.map((lang, i) => 

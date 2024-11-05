@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 dotenv.config({path: resolve(__dirname, '../../.env')})
 import { env } from '@lyricsfluencer/env'
 import apiRoutes from './routes/api'
+import paymentRoutes from './routes/payment'
 
 const PORT = env.PORT || 3000;
 const dev = env.NODE_ENV !== 'production';
@@ -23,12 +24,14 @@ try {
         server.use(cookieParser());
         server.use(express.json());
 
+        server.use('/payment', paymentRoutes)
+        server.use('/api', apiRoutes);
+
         // give all request to Nextjs server
         server.get('/_next/*', (req, res) => {
             handle(req, res);
         });
-
-        server.use('/api', apiRoutes);
+        
 
         server.get('*', (req, res) => {
             return handle(req, res);

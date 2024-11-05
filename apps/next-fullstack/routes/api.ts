@@ -10,10 +10,19 @@ router.post('/search', async (req, res) => {
     res.json({ status: 200, songs });
 });
 
+router.post('/popular', async (req, res) => {
+    // TODO get targetLanguageCode from firestore
+    req.body.targetLanguage = "DE"
+    console.log(req.body)
+    const songs = await musixmatch.getPopularSongs(req.body.targetLanguageCode);
+    res.json({ status: 200, songs });
+});
+
 router.post('/quicksearch', async (req, res) => {
     try {
-        if (!req.body.target || !res.body.searchQuery ) return res.json({ status: 400 })
+        if (!req.body.target || !req.body.searchQuery ) return res.json({ status: 400 })
 
+        console.log(req.body)
         const target = req.body.target
         const query = req.body.searchQuery
 
@@ -34,11 +43,22 @@ router.post('/quicksearch', async (req, res) => {
 router.post('/selected', async (req, res) => {
     const reqData: SelectedSongRequest = req.body;
 
-    let song = reqData.song
-    const targetLanguage = reqData.targetLanguage
+    let song;
+    if (typeof reqData.song === 'string') {
+        try {
+            song = JSON.parse(reqData.song);
+        } catch (err) {
+            return res.status(400).json({ error: 'Invalid song data' });
+        }
+    } else if (typeof reqData.song === 'object') {
+        song = reqData.song;
+    } else {
+        return res.status(400).json({ error: 'Song data must be an object or string' });
+    }
+    const nativeLanguage = reqData.nativeLanguage ?? "DE"
 
     song = await musixmatch.getLyrics(song);
-    song.translation = await handleTranslate(song.lyrics, targetLanguage)
+    song.translation = await handleTranslate(song.lyrics, nativeLanguage)
 
     const resData: SelectedSongResponse = {
         status: 200,

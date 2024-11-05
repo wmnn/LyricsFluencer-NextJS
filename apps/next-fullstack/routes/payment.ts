@@ -1,8 +1,7 @@
 //@ts-nocheck
 //@ts-ignore
 import express from 'express';
-const router = express.Router();
-import { db, verifyToken, deleteUser } from '@lyricsfluencer/firebase';
+import { db, verifyToken, deleteUser } from '@lyricsfluencer/firebase-admin';
 import {
     verifyPaypalSubscription,
     cancelPaypalSubscription,
@@ -15,10 +14,13 @@ import {
     verifyStripeSubscription,
 } from '@lyricsfluencer/stripe';
 
+const router = express.Router();
+
 //@ts-ignore
 const fetch = (...args) =>
     import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
+/*
 router.get('/mailerlite', async (req, res) => {
     const { email } = req.query;
     var data = await fetch(
@@ -38,7 +40,8 @@ router.get('/mailerlite', async (req, res) => {
             ? res.json({ status: 200 })
             : res.json({ status: 404 })
         : res.json({ status: 404 });
-});
+});*/
+/*
 router.get('/free', async (req, res) => {
     //CREATING A FREE USER IN DB
     const { token } = req.query;
@@ -54,8 +57,10 @@ router.get('/free', async (req, res) => {
         return res.json({ message: 'Internal Error' });
     }
 });
-
+*/
+/*
 router.get('/capture/paypal', async (req, res) => {
+
     const { subscriptionId, token } = req.query;
     const plan = 'premium';
     const { uid } = await verifyToken(token);
@@ -78,7 +83,9 @@ router.get('/capture/paypal', async (req, res) => {
     } catch (e) {
         return res.json({ message: 'Internal Error' });
     }
+
 });
+
 router.get('/getPaypalPlans', async (req, res) => {
     const data = await getPaypalPlans();
     return res.json({ status: 200, data: data });
@@ -86,7 +93,7 @@ router.get('/getPaypalPlans', async (req, res) => {
 router.get('/getPaypalProducts', async (req, res) => {
     const data = await getPaypalProducts();
     return res.json({ status: 200, data: data });
-});
+});*/
 /*router.get('/createPaypalProduct', async (req,res) => {
         const data = await createPaypalProduct();
         return res.json({status: 200, data: data})
@@ -95,8 +102,9 @@ router.get('/getPaypalProducts', async (req, res) => {
         const data = await createPaypalPlan();
         return res.json({data: data})
       })*/
-
+/*
 router.get('/cancel/paypal', async (req, res) => {
+
     const { token } = req.query;
     const reason = 'LOREM IPSUM';
     const { uid } = await verifyToken(token);
@@ -118,40 +126,50 @@ router.get('/cancel/paypal', async (req, res) => {
         );
         return res.json({ status: 200 });
     }
-});
+
+});*/
 router.delete('/account', async (req, res) => {
+
+    console.log("REQ")
+    let token = undefined;
+    if (req.body.token) token = req.body.token;
+    if (req.query.token) token = req.query.token
+
     //Delete account endpoint
-    const { token } = req.query;
     const reason = 'LOREM IPSUM';
     const { uid } = await verifyToken(token);
     if (!uid) {
         return res.json({ message: 'Invalid token' });
     }
-    const user = await db.collection('users').doc(uid).get();
-    if (!user._fieldsProto) {
-        //If no document is found create a document with a free plan
-        return res.json({ status: 404 });
+    const doc = await db.collection('users').doc(uid).get();
+    if (!doc._fieldsProto) {
+        // No document is found
+        await deleteUser(uid);
+        return res.json({ status: 200 });
     }
-    console.log(user._fieldsProto);
+    const user = doc._fieldsProto
+    // Document exists
+    console.log(user);
     if (
-        user._fieldsProto.subscriptionPlan.stringValue == 'special' ||
-        user._fieldsProto.subscriptionPlan.stringValue == 'free'
+        user.subscriptionPlan?.stringValue == 'special' ||
+        user.subscriptionPlan?.stringValue == 'free'
     ) {
         await deleteUser(uid);
         return res.json({ status: 200 });
     }
     if (
-        user._fieldsProto.subscriptionProvider.stringValue == 'PAYPAL' &&
-        user._fieldsProto.subscriptionStatus.stringValue != 'EXPIRED'
+        user.subscriptionProvider?.stringValue == 'PAYPAL' &&
+        user.subscriptionStatus?.stringValue != 'EXPIRED'
     ) {
         const data = await cancelPaypalSubscription(
-            user._fieldsProto.subscriptionId.stringValue,
+            user.subscriptionId.stringValue,
             reason
         );
     }
     await deleteUser(uid);
     return res.json({ status: 200 });
 });
+/*
 router.get('/stripe', async (req, res) => {
     const productId = process.env.STRIPE_PRICE_ID;
     const { token } = req.query;
@@ -168,7 +186,8 @@ router.get('/stripe', async (req, res) => {
     );
     return res.redirect(sessionUrl); //redirecting the user to the stripe checkout
 });
-
+*/
+/*
 router.get('/capture/stripe', async (req, res) => {
     const { token, costumer_id } = req.query;
     const { uid } = await verifyToken(token);
@@ -192,6 +211,8 @@ router.get('/capture/stripe', async (req, res) => {
         }
     }
 });
+*/
+/*
 router.get('/plan', async (req, res) => {
     //this route verifies the current plan of the user
     const { uid } = await verifyToken(req.query.token);
@@ -259,5 +280,5 @@ router.get('/plan', async (req, res) => {
             subscriptionStatus: stripeSubscriptionStatus,
         });
     }
-});
+});*/
 export default router;
