@@ -56,3 +56,17 @@ async function deleteDocumentAndSubcollections(ref) {
     await ref.delete();
     
 }
+
+// Utility function to delete all documents in a collection
+async function deleteCollection(collectionRef: CollectionReference): Promise<void> {
+    const snapshot: QuerySnapshot = await collectionRef.get();
+    const batch = firestore.batch();
+
+    // Delete each document in the collection
+    snapshot.forEach((doc: DocumentSnapshot) => {
+        batch.delete(doc.ref);
+    });
+
+    // Commit the batch operation to delete documents
+    await batch.commit();
+}
