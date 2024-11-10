@@ -43,15 +43,15 @@ function Header () {
 
             { 
                 currentUser ? <>               
-                    <div className="grow basis-0 flex flex-col items-center text-center">
+                    <button className="grow basis-0 flex flex-col items-center text-center" onClick={() => router.push("/")}>
                         <h1 className='text-xl font-bold'>LyricsFluencer</h1>
                         <h2 className='text-l'>Learn lanugages with music</h2>
-                    </div>
+                    </button>
                 </> : <>
-                    <div className="grow basis-0 flex flex-col items-center hover:cursor-pointer text-center" onClick={() => router.push("/")}>
+                    <button className="grow basis-0 flex flex-col items-center hover:cursor-pointer text-center" onClick={() => router.push("/")}>
                         <h1 className='text-xl font-bold'>LyricsFluencer</h1>
                         <h2 className='text-l'>Learn lanugages with music</h2>
-                    </div>
+                    </button>
                 </>
 
             }

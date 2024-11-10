@@ -21,7 +21,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     const [resultSongsContext, setResultSongsContext] = useState<Array<any>>([])
     const [songContext, setSongContext] = useState<SongContextType>({isSongShown: false, lyrics: [], translation: [], song: null})
     
-    if(Component.getLayout){
+    if(Component.getLayout) {
         return (
             <UserContext.Provider value={{userContext, setUserContext}}>
                 {Component.getLayout(<Component {...pageProps} />)}
@@ -31,15 +31,15 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
     return (
         <UserContext.Provider value={{userContext, setUserContext}}>
-        <ResultSongsContext.Provider value={{resultSongsContext, setResultSongsContext}}>
-            <SongContext.Provider value={{songContext, setSongContext}}>
+            <ResultSongsContext.Provider value={{resultSongsContext, setResultSongsContext}}>
+                <SongContext.Provider value={{songContext, setSongContext}}>
 
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
 
-            </SongContext.Provider>
-        </ResultSongsContext.Provider>
+                </SongContext.Provider>
+            </ResultSongsContext.Provider>
         </UserContext.Provider>
     )
   
