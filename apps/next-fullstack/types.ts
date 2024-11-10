@@ -1,3 +1,9 @@
+export interface User {
+    id?: string,
+    nativeLanguage?: string,
+    learnedLanguage?: string,
+}
+
 export interface Song {
     // [key: string] : any,
     id: string,

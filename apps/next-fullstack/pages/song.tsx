@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import SongContext from '../Context/SongContext';
+import SongContext from '../components/Context/SongContext';
 
-function Song() {
-
+export default function Song () {
+    
     const {songContext, _}: any = useContext(SongContext);
 
     return <>
@@ -13,15 +13,14 @@ function Song() {
             </svg>
         </button>
 
-
         {
-            songContext.lyrics ? <>
-                {songContext.lyrics!.map((_, i) => {
+            songContext?.lyrics ? <>
+                {songContext?.lyrics.map((_, i) => {
                     return <>
-                            <p className='h-8'>{songContext.lyrics[i]}</p>
+                            <p className='h-8'>{songContext?.lyrics[i]}</p>
                             { 
-                                songContext.translation[i] ? 
-                                    <p className='h-8 text-yellow-600'>{songContext.translation[i]}</p>
+                                songContext?.translation[i] ? 
+                                    <p className='h-8 text-yellow-600'>{songContext?.translation[i]}</p>
                                 : ''
                             }
                             
@@ -31,5 +30,4 @@ function Song() {
         }
     
     </>
-} 
-export default Song;
+}

@@ -1,18 +1,14 @@
-//@ts-nocheck
 import React, { useEffect, useState, useContext } from 'react';
 import { auth } from '@lyricsfluencer/firebase-client';
 import { onAuthStateChanged } from 'firebase/auth';
-// import { useRouter } from 'next/router';
-import Song from '../components/Index/Song'
-import SongForm from '../components/Index/SongForm'
-import SongContext from '../components/Context/SongContext';
-import SongResults from '../components/Index/SongResults';
+import QuickSearchForm from '../components/Index/QuickSearchForm';
+import { Button } from '../components';
+import { useRouter } from "next/router";
 
 function Index() {
-    // const router = useRouter();
-    
+
+    const router = useRouter()
     const [nativeLanguage, setNativeLanguage] = useState('de');
-    const {songContext, setSongContext}: any = useContext(SongContext);
 
     useEffect(() => {
 
@@ -35,17 +31,9 @@ function Index() {
     }, []);
 
 
-    return <div className='flex justify-center flex-col p-8'>
-        { !songContext.isSongShown ? <>
-
-            <SongForm setNativeLanguage={setNativeLanguage}></SongForm>
-            <SongResults nativeLanguage={nativeLanguage}/>
-            
-        </> : <>
-
-            <Song />   
-                  
-        </>}
+    return <div className='flex justify-center mt-24 flex-col gap-8'>
+        <QuickSearchForm />
+        <Button text={`Browse Songs`} handleClick={() => router.push('/browse')}/>
     </div>    
 }
 

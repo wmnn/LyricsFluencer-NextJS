@@ -1,6 +1,6 @@
 export const root = "http://localhost:3000"
 export const languages = [
-    {
+    /*{
         code: 'af',
         name: 'Afrikaans',
     },
@@ -15,12 +15,12 @@ export const languages = [
     {
         code: 'am',
         name: 'Amharic',
-    },
+    },*/
     {
         code: 'ar',
         name: 'Arabic',
     },
-    {
+    /*{
         code: 'hy',
         name: 'Armenian',
     },
@@ -111,12 +111,12 @@ export const languages = [
     {
         code: 'nl',
         name: 'Dutch',
-    },
+    },*/
     {
         code: 'en',
         name: 'English',
     },
-    {
+    /*{
         code: 'eo',
         name: 'Esperanto',
     },
@@ -135,12 +135,12 @@ export const languages = [
     {
         code: 'fi',
         name: 'Finnish',
-    },
+    },*/
     {
         code: 'fr',
         name: 'French',
     },
-    {
+    /*{
         code: 'fy',
         name: 'Frisian',
     },
@@ -155,12 +155,12 @@ export const languages = [
     {
         code: 'ka',
         name: 'Georgian',
-    },
+    },*/
     {
         code: 'de',
         name: 'German',
     },
-    {
+    /*{
         code: 'gom',
         name: 'Goan Konkani',
     },
@@ -223,7 +223,7 @@ export const languages = [
     {
         code: 'ga',
         name: 'Irish',
-    },
+    },*/
     {
         code: 'it',
         name: 'Italian',
@@ -232,7 +232,7 @@ export const languages = [
         code: 'ja',
         name: 'Japanese',
     },
-    {
+    /*{
         code: 'jw',
         name: 'Javanese',
     },
@@ -375,12 +375,12 @@ export const languages = [
     {
         code: 'pl',
         name: 'Polish',
-    },
+    },*/
     {
         code: 'pt',
         name: 'Portuguese',
     },
-    {
+    /*{
         code: 'pa',
         name: 'Punjabi',
     },
@@ -391,12 +391,12 @@ export const languages = [
     {
         code: 'ro',
         name: 'Romanian',
-    },
+    },*/
     {
         code: 'ru',
         name: 'Russian',
     },
-    {
+    /*{
         code: 'sm',
         name: 'Samoan',
     },
@@ -439,12 +439,12 @@ export const languages = [
     {
         code: 'so',
         name: 'Somali',
-    },
+    },*/
     {
         code: 'es',
         name: 'Spanish',
     },
-    {
+    /*{
         code: 'su',
         name: 'Sundanese',
     },
@@ -483,12 +483,12 @@ export const languages = [
     {
         code: 'ts',
         name: 'Tsonga',
-    },
+    },*/
     {
         code: 'tr',
         name: 'Turkish',
     },
-    {
+    /*{
         code: 'tk',
         name: 'Turkmen',
     },
@@ -543,5 +543,5 @@ export const languages = [
     {
         code: 'zh-CN',
         name: 'Chinese (Simplified)',
-    },
+    },*/
 ];

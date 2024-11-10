@@ -122,9 +122,12 @@ const Menu = ({ setMenu, currentUser, router, userSignOut, handleNavigate }) => 
 const Layout = ({ children }) => {
   return (
     <>
-      <Header />
-      <hr />
-      {children}
+        <Header />
+        <hr />
+        <div className="lg:w-[50%] lg:ml-[25%] p-8">
+            {children}
+        </div>
+      
     </>
   )
 };
