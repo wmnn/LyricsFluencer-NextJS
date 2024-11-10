@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 import SongContext from '../components/Context/SongContext';
+import BackIcon from '../components/icons/BackIcon';
+import Bar from '../components/Song/Bar';
 
 export default function Song () {
     
@@ -8,16 +10,15 @@ export default function Song () {
     return <>
 
         <button onClick={() => history.back()} className="my-8">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                <path /*strokeLinecap="round" strokeLinejoin="round"*/ d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-            </svg>
+            <BackIcon />
         </button>
 
         {
             songContext?.lyrics ? <>
-                {songContext?.lyrics.map((_, i) => {
+                {songContext?.lyrics.map((bar: string, i) => {
                     return <>
-                            <p className='h-8'>{songContext?.lyrics[i]}</p>
+                            <Bar bar={bar}/>
+
                             { 
                                 songContext?.translation[i] ? 
                                     <p className='h-8 text-yellow-600'>{songContext?.translation[i]}</p>
