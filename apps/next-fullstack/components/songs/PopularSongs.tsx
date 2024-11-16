@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import SongResult from "./Index/SongResult";
-import UserContext from './Context/UserContext';
+import SongResult from "./SongResult";
+import { UserContext } from '../context/UserContext';
 
 export default function PopularSongs() {
 

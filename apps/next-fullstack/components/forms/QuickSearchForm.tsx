@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { useRouter } from "next/router";
-import ResultSongsContext from '../Context/ResultSongsContext';
-import SongContext from '../Context/SongContext';
-import UserContext from '../Context/UserContext';
-import { ManualSearchResponse, QuickSearchResponse } from '../../types';
-import SelectNativeLanguageMenu from './SelectNativeLanguageMenu';
+import ResultSongsContext from '../context/ResultSongsContext';
+import SongContext from '../context/SongContext';
+import { UserContext } from '../context/UserContext';
+import { ManualSearchResponse, QuickSearchResponse } from '../types';
+import SelectNativeLanguageMenu from '../SelectNativeLanguageMenu';
 import SearchForm from './SearchForm';
 
 export default function QuickSearchForm() {

@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
 import Layout from '../components/Index/Layout'
-import UserContext from '../components/Context/UserContext'
-import ResultSongsContext from '../components/Context/ResultSongsContext'
+import { UserContextProvider } from '../components/context/UserContext'
+import ResultSongsContext from '../components/context/ResultSongsContext'
 import type { AppProps } from 'next/app'
-import SongContext from "../components/Context/SongContext";
-import { SongContext as SongContextType } from "../types";
+import SongContext from "../components/context/SongContext";
+import { SongContext as SongContextType } from "../components/types";
  
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode
@@ -17,20 +17,19 @@ type AppPropsWithLayout = AppProps & {
 }
  
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-    const [userContext, setUserContext] = useState(null)
     const [resultSongsContext, setResultSongsContext] = useState<Array<any>>([])
     const [songContext, setSongContext] = useState<SongContextType>({isSongShown: false, lyrics: [], translation: [], song: null})
     
     if(Component.getLayout) {
         return (
-            <UserContext.Provider value={{userContext, setUserContext}}>
+            <UserContextProvider>
                 {Component.getLayout(<Component {...pageProps} />)}
-            </UserContext.Provider>
+            </UserContextProvider>
         )
     }
 
     return (
-        <UserContext.Provider value={{userContext, setUserContext}}>
+        <UserContextProvider>
             <ResultSongsContext.Provider value={{resultSongsContext, setResultSongsContext}}>
                 <SongContext.Provider value={{songContext, setSongContext}}>
 
@@ -40,7 +39,7 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
                 </SongContext.Provider>
             </ResultSongsContext.Provider>
-        </UserContext.Provider>
+        </UserContextProvider>
     )
   
 };

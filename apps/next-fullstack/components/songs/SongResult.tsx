@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import SongContext from '../Context/SongContext';
-import UserContext from '../Context/UserContext';
-import { SelectedSongRequest, SelectedSongResponse, Song } from "../../types";
+import SongContext from '../context/SongContext';
+import { UserContext } from '../context/UserContext';
+import { SelectedSongRequest, SelectedSongResponse, Song } from "../types";
 import { useRouter } from 'next/router';
 
 export default function SongResult({ song, key }) {
@@ -24,14 +24,14 @@ export default function SongResult({ song, key }) {
         })).json()
 
         if (res.song.lyrics && res.song.translation) {
-            setSongContext(_ => {
-                return {
-                    lyrics: res.song.lyrics,
-                    translation: res.song.translation,
-                    song: res.song
-                }
-            })
-            router.push('/song')
+            // setSongContext(_ => {
+            //     return {
+            //         lyrics: res.song.lyrics,
+            //         translation: res.song.translation,
+            //         song: res.song
+            //     }
+            // })
+            router.push(`/song?id=${song.id}&url=${song.url}&nativeLanguage=${userContext?.nativeLanguage}`)
         }
     }
 

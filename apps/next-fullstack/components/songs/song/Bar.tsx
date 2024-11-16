@@ -14,8 +14,10 @@ export default function Bar({ bar }) {
     
     return <div className="flex gap-1">
         {
-            getWordsFromString(bar).map(word => {
-                return <Word word={word} />
+            getWordsFromString(bar).map((word, i) => {
+                return <div key={i}>
+                    <Word word={word} />
+                </div>
             })
         }
     </div>

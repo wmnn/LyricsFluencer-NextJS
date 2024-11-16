@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom'
 //@ts-ignore
 import { env } from '@lyricsfluencer/env'
-import { Song } from '../../apps/next-fullstack/types';
+import { Song } from '../../apps/next-fullstack/components/types';
 
 async function getHTML(URL) {
     var res = await fetch(URL, {

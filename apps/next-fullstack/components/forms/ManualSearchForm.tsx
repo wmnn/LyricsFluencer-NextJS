@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
-import ResultSongsContext from '../Context/ResultSongsContext';
-import { ManualSearchResponse } from '../../types';
-import SelectNativeLanguageMenu from './SelectNativeLanguageMenu';
+import ResultSongsContext from '../context/ResultSongsContext';
+import { ManualSearchResponse } from '../types';
+import SelectNativeLanguageMenu from '../SelectNativeLanguageMenu';
 import SearchForm from './SearchForm';
 
 export default function ManualSongForm() {

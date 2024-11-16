@@ -1,4 +1,4 @@
-import { languages } from '../../staticData';
+import { languages } from './staticData';
 
 export default function SelectLanguageMenu({handleChange, title, value}) {
 

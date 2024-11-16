@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import SongContext from '../Context/SongContext';
+import SongContext from '../context/SongContext';
 
 function Song() {
 
@@ -17,15 +17,15 @@ function Song() {
         {
             songContext.lyrics ? <>
                 {songContext.lyrics!.map((_, i) => {
-                    return <>
-                            <p className='h-8'>{songContext.lyrics[i]}</p>
+                    return <div key={i}>
+                        <p className='h-8'>{songContext.lyrics[i]}</p>
                             { 
                                 songContext.translation[i] ? 
                                     <p className='h-8 text-yellow-600'>{songContext.translation[i]}</p>
                                 : ''
                             }
-                            
-                    </>
+                    </div>         
+                  
                 })}
             </> : 'Some error occured'
         }

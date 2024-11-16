@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
-import ResultSongsContext from '../Context/ResultSongsContext';
-import { Song } from "../../types";
+import ResultSongsContext from '../context/ResultSongsContext';
+import { Song } from "../types";
 import SongResult from "./SongResult";
 
 function SongResults() {

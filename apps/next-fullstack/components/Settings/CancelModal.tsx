@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Button from '../Button'
 import { auth } from '@lyricsfluencer/firebase-client'
 import { onAuthStateChanged } from 'firebase/auth';
-import { root } from '../../staticData'
+import { root } from '../staticData'
 import { useRouter } from "next/router";
 import { signOut } from 'firebase/auth'
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { auth } from '@lyricsfluencer/firebase-client';
 import { onAuthStateChanged } from 'firebase/auth';
-import QuickSearchForm from '../components/Index/QuickSearchForm';
+import QuickSearchForm from '../components/forms/QuickSearchForm';
 import { Button } from '../components';
 import { useRouter } from "next/router";
 

@@ -2,7 +2,7 @@ import express from 'express'
 import * as musixmatch from '@lyricsfluencer/musixmatch'
 // @ts-ignore  
 import { handleTranslate } from '@lyricsfluencer/googletranslate'
-import { SelectedSongRequest, SelectedSongResponse } from '../types';
+import { SelectedSongRequest, SelectedSongResponse, Song } from '../components/types';
 const router = express.Router()
 
 router.post('/search', async (req, res) => {
@@ -58,6 +58,31 @@ router.post('/selected', async (req, res) => {
     const nativeLanguage = reqData.nativeLanguage ?? "DE"
 
     song = await musixmatch.getLyrics(song);
+    song.translation = await handleTranslate(song.lyrics, nativeLanguage)
+
+    const resData: SelectedSongResponse = {
+        status: 200,
+        song
+    }
+    res.json(resData);
+});
+router.get('/song', async (req, res) => {
+    
+    if (!req.query.id || !req.query.url || !req.query.nativeLanguage) {
+        return res.status(400);
+    }
+    const id = req.query.id;
+    const url = req.query.url;
+    const nativeLanguage = req.query.nativeLanguage;
+
+    let reqSong: Song = {
+        id,
+        url,
+        name: '',
+        artist: ''
+    }
+
+    const song = await musixmatch.getLyrics(reqSong);
     song.translation = await handleTranslate(song.lyrics, nativeLanguage)
 
     const resData: SelectedSongResponse = {
