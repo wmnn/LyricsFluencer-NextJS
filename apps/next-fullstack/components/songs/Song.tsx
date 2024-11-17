@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import SongContext from '../context/SongContext';
+import { SongContext } from '../context/SongContext';
 
 function Song() {
 

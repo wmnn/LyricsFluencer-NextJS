@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { auth } from '@lyricsfluencer/firebase-client';
 import { onAuthStateChanged } from 'firebase/auth';
 import QuickSearchForm from '../components/forms/QuickSearchForm';
 import { Button } from '../components';
 import { useRouter } from "next/router";
 
-function Index() {
+export default function Index() {
 
     const router = useRouter()
-    const [nativeLanguage, setNativeLanguage] = useState('de');
 
     useEffect(() => {
 
@@ -26,7 +25,7 @@ function Index() {
             }
         });
         return () => {
-            listen(); //on Unmount this will be called
+            listen();
         };
     }, []);
 
@@ -36,5 +35,3 @@ function Index() {
         <Button text={`Browse Songs`} handleClick={() => router.push('/browse')}/>
     </div>    
 }
-
-export default Index;

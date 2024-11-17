@@ -1,4 +1,10 @@
 export const root = "http://localhost:3000"
+export enum RouterPaths {
+    Home = '/',
+    Login = '/auth/login',
+    Settings = '/settings',
+}
+
 export const languages = [
     /*{
         code: 'af',

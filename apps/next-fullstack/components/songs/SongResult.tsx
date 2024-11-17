@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import SongContext from '../context/SongContext';
+import { SongContext } from '../context/SongContext';
 import { UserContext } from '../context/UserContext';
 import { SelectedSongRequest, SelectedSongResponse, Song } from "../types";
 import { useRouter } from 'next/router';

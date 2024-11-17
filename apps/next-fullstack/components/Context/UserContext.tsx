@@ -1,11 +1,17 @@
 import { createContext, useEffect, useState } from 'react'
 import { User } from '../types';
 
-const UserContext = createContext<any>(null);
+const UserContext = createContext<UserContextType>(null);
+
+interface UserContextType {
+    user: User;
+    userContext: User;
+    setUserContext: (updateFn: (prev: User) => User) => void;
+}
 
 function UserContextProvider({ children }) {
 
-    const [user, setUser] = useState({
+    const [user, setUser] = useState<User>({
         learnedLanguage: 'en',
         nativeLanguage: 'en',
     })
@@ -22,7 +28,7 @@ function UserContextProvider({ children }) {
     }, [])
 
     function setUserContext(updateFn: (prev: User) => User) {
-        const newUser = updateFn(user);
+        const newUser: User = updateFn(user);
         if (!newUser) {
             console.log("Can't update user with: ", newUser);
             return;

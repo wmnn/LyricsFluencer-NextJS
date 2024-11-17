@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { useRouter } from "next/router";
-import ResultSongsContext from '../context/ResultSongsContext';
-import SongContext from '../context/SongContext';
+import { ResultSongsContext } from '../context/ResultSongsContext';
+import { SongContext } from '../context/SongContext';
 import { UserContext } from '../context/UserContext';
 import { ManualSearchResponse, QuickSearchResponse } from '../types';
 import SelectNativeLanguageMenu from '../SelectNativeLanguageMenu';

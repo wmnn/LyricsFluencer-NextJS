@@ -12,12 +12,12 @@ import paymentRoutes from './routes/payment'
 const PORT = env.PORT || 3000;
 const dev = env.NODE_ENV !== 'production';
 
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const nextApp = next({ dev });
+const handle = nextApp.getRequestHandler();
 
 try {
     (async () => {
-        await app.prepare()
+        await nextApp.prepare()
         const server = express();
 
         server.use(cors({ origin: env.ROOT, credentials: true }));

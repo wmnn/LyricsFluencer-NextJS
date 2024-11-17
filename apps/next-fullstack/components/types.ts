@@ -15,13 +15,6 @@ export interface Song {
     album?: string,
 }
 
-export interface SongContext {
-    isSongShown: boolean,
-    lyrics: string[],
-    translation: string[],
-    song: Song | null
-}
-
 export interface SelectedSongRequest {
     song: Song,
     nativeLanguage: string,

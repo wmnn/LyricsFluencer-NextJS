@@ -14,7 +14,7 @@ function CancelSubscriptionModal({setIsCancelClicked, handleCancel}) {
               <Button 
                   text={"Cancel"} 
                   color={"bg-white"} 
-                  width={"w-[100%]"}
+                  // width={"w-[100%]"}
                   handleClick={() => setIsCancelClicked(false)}
                   textColor={"text-black"}
                   />
@@ -22,7 +22,7 @@ function CancelSubscriptionModal({setIsCancelClicked, handleCancel}) {
             <Button 
                   text={"Yes"} 
                   color={"bg-red-600"} 
-                  width={"w-[100%]"}
+                  // width={"w-[100%]"}
                   handleClick={() => setShowConfirmation(true)}
                   textColor={"text-black"}
               />   
@@ -33,7 +33,7 @@ function CancelSubscriptionModal({setIsCancelClicked, handleCancel}) {
             <Button 
                 text={"No"} 
                 color={"bg-white"} 
-                width={"w-[100%]"}
+                // width={"w-[100%]"}
                 handleClick={() => setIsCancelClicked(false)}
                 textColor={"text-black"}
                 />
@@ -41,7 +41,7 @@ function CancelSubscriptionModal({setIsCancelClicked, handleCancel}) {
            <Button 
                 text={"Yes, delete"} 
                 color={"bg-red-600"} 
-                width={"w-[100%]"}
+                // width={"w-[100%]"}
                 handleClick={() => {
                 
                   handleCancel()

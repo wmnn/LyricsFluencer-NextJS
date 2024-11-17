@@ -1,24 +1,24 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BackIcon from '../components/icons/BackIcon';
 import Bar from '../components/songs/song/Bar';
 
 export default function Song () {
     
-    const [songContext, setSongContext]: any = useState({});
+    const [song, setSong]: any = useState({});
 
     useEffect(() => {
-        console.log("Use Efefec")
         fetchSong()
     }, [])
+
     async function fetchSong() {
-    
-   
+
         const searchParams = new URLSearchParams(window.location.search);
         const res = await (await fetch(`/api/song?url=${searchParams.get('url')}&id=${searchParams.get('id')}&nativeLanguage=en`)).json();
         console.log(res)
         if (res.status == 200) {
-            setSongContext(res.song);
+            setSong(res.song);
         }
+
     }
     return <>
 
@@ -27,14 +27,14 @@ export default function Song () {
         </button>
 
         {
-            songContext?.lyrics ? <>
-                {songContext?.lyrics.map((bar: string, i) => {
+            song?.lyrics ? <>
+                {song?.lyrics.map((bar: string, i) => {
                     return <>
                         <div key={i}>
                             <Bar bar={bar}/>
                             { 
-                                songContext?.translation[i] ? 
-                                    <p className='h-8 text-yellow-600'>{songContext?.translation[i]}</p>
+                                song?.translation[i] ? 
+                                    <p className='h-8 text-yellow-600'>{song?.translation[i]}</p>
                                 : ''
                             }
                         </div>

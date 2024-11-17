@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { auth } from '@lyricsfluencer/firebase-client';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import { Button, Input } from '../components';
+import { Button, Input } from '../../components';
 
 function Register() {
     const router = useRouter();
