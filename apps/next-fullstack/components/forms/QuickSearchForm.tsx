@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useRouter } from "next/router";
 import { ResultSongsContext } from '../context/ResultSongsContext';
 import { SongContext } from '../context/SongContext';
@@ -13,9 +13,12 @@ export default function QuickSearchForm() {
     const {_, setResultSongsContext}: any = useContext(ResultSongsContext);
     const {songContext, setSongContext}: any = useContext(SongContext);
     const {userContext, setUserContext}: any = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(false);
     
     async function handleSearch(e: React.ChangeEvent<HTMLFormElement>, query: string) {
         e.preventDefault();
+        setIsLoading(true);
+
 
         const res : QuickSearchResponse = await (await fetch('/api/quicksearch', {
             method: 'POST',
@@ -28,6 +31,8 @@ export default function QuickSearchForm() {
             },
         })).json()
 
+        setIsLoading(false);
+
         if (res.status == 200) {
             setSongContext(res.song);
             router.push(`/song`)
@@ -39,7 +44,7 @@ export default function QuickSearchForm() {
 
         <div className="flex flex-col">
             <SelectNativeLanguageMenu />
-            <SearchForm handleSearch={handleSearch} buttonText={`Quick search`}/>
+            <SearchForm handleSearch={handleSearch} buttonText={`Quick search`} isLoading={isLoading}/>
         </div>
 
     </>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import BackIcon from '../components/icons/BackIcon';
 import Bar from '../components/songs/song/Bar';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function Song () {
     
@@ -40,7 +41,10 @@ export default function Song () {
                         </div>
                     </>
                 })}
-            </> : 'Loading'
+            </> : 
+            <p> 
+                <ClipLoader color="#7a7a7a" size={28} />
+            </p>
         }
     
     </>
