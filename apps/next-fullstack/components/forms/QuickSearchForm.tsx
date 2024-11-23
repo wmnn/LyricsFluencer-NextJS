@@ -35,7 +35,9 @@ export default function QuickSearchForm() {
 
         if (res.status == 200) {
             setSongContext(res.song);
-            router.push(`/song`)
+            // router.push(`/song`)
+            const song = res.song;
+            router.push(`/song?id=${song.id}&url=${song.url}&nativeLanguage=${userContext?.nativeLanguage}`)
         }
         
     }
@@ -44,7 +46,7 @@ export default function QuickSearchForm() {
 
         <div className="flex flex-col">
             <SelectNativeLanguageMenu />
-            <SearchForm handleSearch={handleSearch} buttonText={`Quick search`} isLoading={isLoading}/>
+            <SearchForm handleSearch={handleSearch} buttonText={`Display song`} isLoading={isLoading}/>
         </div>
 
     </>

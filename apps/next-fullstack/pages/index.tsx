@@ -4,6 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import QuickSearchForm from '../components/forms/QuickSearchForm';
 import { Button } from '../components';
 import { useRouter } from "next/router";
+import DecksButton from '../components/DecksButton';
 
 export default function Index() {
 
@@ -30,8 +31,9 @@ export default function Index() {
     }, []);
 
 
-    return <div className='flex justify-center mt-24 flex-col gap-8'>
+    return <div className='flex justify-center mt-24 flex-col gap-4'>
         <QuickSearchForm />
         <Button text={`Browse Songs`} handleClick={() => router.push('/browse')}/>
+        <DecksButton />
     </div>    
 }
