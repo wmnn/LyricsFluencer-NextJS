@@ -118,10 +118,54 @@ async function handleDeleteDeck(uid, deckName) {
     }
 }
 
+// Update a card in a specific deck
+async function updateCard(uid, deckName, updatedCard) {
+    const cardRef = db
+        .collection('flashcards')
+        .doc(uid)
+        .collection('decks')
+        .doc(deckName)
+        .collection('cards')
+        .doc(updatedCard.id);
+
+    try {
+        await cardRef.set({
+            front: updatedCard.front,
+            back: updatedCard.back,
+            interval: updatedCard.interval,
+            due: updatedCard.due
+        }, { merge: true });  // Merge with existing data to avoid overwriting other fields
+        return updatedCard;
+    } catch (error) {
+        console.error('Error updating card:', error);
+        return null;  // Return null if there's an error
+    }
+}
+// Delete a card from a specific deck
+async function deleteCard(uid, deckName, cardId) {
+    const cardRef = db
+        .collection('flashcards')
+        .doc(uid)
+        .collection('decks')
+        .doc(deckName)
+        .collection('cards')
+        .doc(cardId);
+
+    try {
+        await cardRef.delete();
+        return true;  // Return true if deletion is successful
+    } catch (error) {
+        console.error('Error deleting card:', error);
+        return false;  // Return false if there's an error
+    }
+}
+
 // Export functions to use in other modules
 export {
   createDeck,
   fetchingDecks,
   handleAddToDeck,
-  handleDeleteDeck
+  handleDeleteDeck,
+  updateCard, 
+  deleteCard
 };
