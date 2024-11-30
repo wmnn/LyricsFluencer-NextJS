@@ -44,8 +44,8 @@ async function fetchingDecks(uid) {
             const deckRef = doc.ref;  // Get the reference to the deck document
             const cards = await getCards(deckRef);  // Fetch cards for the deck
             decks.push({
-            deckName,
-            cards,
+                deckName,
+                cards,
             });
         }
     
@@ -97,27 +97,26 @@ async function handleAddToDeck(uid, front, back, deckName) {
 // Delete a deck and all its cards
 async function handleDeleteDeck(uid, deckName) {
 
-  const deckRef = db.collection('flashcards').doc(uid).collection('decks').doc(deckName);
-  const cardsRef = db.collection('flashcards').doc(uid).collection('decks').doc(deckName).collection('cards');
+    const deckRef = db.collection('flashcards').doc(uid).collection('decks').doc(deckName);
+    const cardsRef = db.collection('flashcards').doc(uid).collection('decks').doc(deckName).collection('cards');
 
-  try {
-    // Delete all cards in the deck
-    const cardsSnapshot = await cardsRef.get();
-    const batch = db.batch();
+    try {
+        // Delete all cards in the deck
+        const cardsSnapshot = await cardsRef.get();
+        const batch = db.batch();
 
-    cardsSnapshot.docs.forEach(doc => {
-      batch.delete(doc.ref);
-    });
+        cardsSnapshot.docs.forEach(doc => {
+            batch.delete(doc.ref);
+        });
 
-    // Delete the deck document itself
-    batch.delete(deckRef);
-    await batch.commit();
+        // Delete the deck document itself
+        batch.delete(deckRef);
+        await batch.commit();
+        return deckName;
 
-    return deckName;
-
-  } catch (error) {
-    console.error('Error deleting deck:', error);
-  }
+    } catch (error) {
+        console.error('Error deleting deck:', error);
+    }
 }
 
 // Export functions to use in other modules
