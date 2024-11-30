@@ -11,16 +11,16 @@ async function createDeck(uid, deckName) {
         const userDoc = await userDocRef.get();
 
         const data = {
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
         };
 
         if (userDoc.exists) {
-        // Document exists, just add the deck
-        await deckRef.set(data, { merge: true });
+            // Document exists, just add the deck
+            await deckRef.set(data, { merge: true });
         } else {
-        // Document doesn't exist, create it and then add the deck
-        await userDocRef.set(data);
-        await deckRef.set(data, { merge: true });
+            // Document doesn't exist, create it and then add the deck
+            await userDocRef.set(data);
+            await deckRef.set(data, { merge: true });
         }
 
         const deck = { deckName, cards: [] };
