@@ -2,6 +2,7 @@
 import { getFirestore } from 'firebase-admin/firestore'
 import serviceAccount from 'lyricsfluencer/firebaseServiceAccount.json'
 import admin from 'firebase-admin';
+export * from './flashcards'
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),

@@ -3,6 +3,12 @@ import { auth } from '@lyricsfluencer/firebase-client';
 import { NextRouter } from "next/router";
 import { signOut } from 'firebase/auth'
 
+export async function handleProtectedRoute(router: NextRouter) {
+    if (!auth.currentUser?.uid) {
+        router.push('/');
+    }
+}
+
 export function handleSignIn(email: string, password: string, router: NextRouter, setUserContext: any) {
     signInWithEmailAndPassword(auth, email, password).then(({user}) => {
         router.push("/")
