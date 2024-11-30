@@ -74,24 +74,23 @@ async function getCards(deckRef) {
 }
 
 // Add a card to a deck
-async function handleAddToDeck(uid, front, back, deckName) {
+async function handleAddToDeck(uid, deckName, card) {
 
-  const deckRef = db.collection('flashcards').doc(uid).collection('decks').doc(deckName).collection('cards');
+    const deckRef = db.collection('flashcards').doc(uid).collection('decks').doc(deckName).collection('cards');
+    try {
+        const newCard = {
+            ...card,
+            interval: 0,
+            due: new Date()
+        };
+        const docRef = await deckRef.add(newCard);
+        newCard.id = docRef.id
+        return newCard;
 
-  try {
-    const docRef = await deckRef.add({
-      front,
-      back,
-      interval: 0,
-      due: new Date(),
-    });
-
-    return docRef.id;
-
-  } catch (error) {
-    console.error('Error adding card:', error);
-    return '';
-  }
+    } catch (error) {
+        console.error('Error adding card:', error);
+        return card;
+    }
 }
 
 // Delete a deck and all its cards

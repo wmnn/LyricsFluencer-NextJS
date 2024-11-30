@@ -1,5 +1,5 @@
 import express from 'express'
-import { createDeck, fetchingDecks, handleDeleteDeck, verifyToken } from '@lyricsfluencer/firebase-admin';
+import { createDeck, fetchingDecks, handleAddToDeck, handleDeleteDeck, verifyToken } from '@lyricsfluencer/firebase-admin';
 const router = express.Router()
 
 router.get('/decks', async (req, res) => {
@@ -53,5 +53,31 @@ router.delete('/decks', async (req, res) => {
     res.status(500)
     res.json({})
 });
+
+router.post('/decks/cards', async (req, res) => {
+
+    const token = req.headers.authorization && req.headers.authorization.split('Bearer ')[1];
+    if (!token) return;
+    const { uid } = await verifyToken(token);
+    if (!uid) return;
+
+    const deckName = req.body.deckName;
+    const card = req.body.card;
+    if (Object.keys(card).length !== 2 || !Object.hasOwn(card, 'front') || !Object.hasOwn(card, 'back')) {
+        res.status(400)
+        res.json({})
+        return;
+    }
+
+    const newCard = await handleAddToDeck(uid, deckName, card);
+    if (Object.keys(newCard).length > 2) {
+        res.status(200)
+        res.json({ card: newCard })
+    } else {
+        res.status(400)
+        res.json({})
+    }
+    
+})
 
 export default router;
