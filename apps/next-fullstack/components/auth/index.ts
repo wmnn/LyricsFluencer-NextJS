@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth'
 import { auth } from '@lyricsfluencer/firebase-client';
 import { NextRouter } from "next/router";
 import { signOut } from 'firebase/auth'
@@ -23,18 +23,23 @@ export function userSignOut () {
     }).catch(error => console.log(error))
 }
 
-export function handleAuthStateChange(setUserContext: any, router: NextRouter) {
+export function handleAuthStateChange(setUserContext: any, router: NextRouter, getUserFromLocaleStorage: () => User) {
 
-    const listen = onAuthStateChanged(auth, (user) => {
+    /**
+     * The need to load the user from locale storage, because if the use the previous value,
+     * the user can't be loaded correctly from locale storage inside the user context.
+     */
+    onAuthStateChanged(auth, (user) => {
+        console.log('Auth state changed')
         if (user) {
-            setUserContext(prev => ({
-                id: user.uid,
-                ...prev
+            setUserContext(_ => ({
+                ...getUserFromLocaleStorage(),
+                id: user.uid
             }));
         } else {
-            setUserContext(prev => ({
-                id: null,
-                ...prev
+            setUserContext(_ => ({
+                ...getUserFromLocaleStorage(),
+                id: null
             }));
         }
     })

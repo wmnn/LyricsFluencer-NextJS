@@ -8,7 +8,7 @@ import { UserContext } from '../../components/context/UserContext';
 function Login() {
 
     const router = useRouter();
-    const {userContext, setUserContext} = useContext(UserContext);
+    const {setUserContext} = useContext(UserContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
   

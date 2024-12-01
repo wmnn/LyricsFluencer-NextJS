@@ -4,7 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import QuickSearchForm from '../components/forms/QuickSearchForm';
 import { Button } from '../components';
 import { useRouter } from "next/router";
-import DecksButton from '../components/DecksButton';
+import DecksButton from '../components/Decks/DecksButton';
 
 export default function Index() {
 

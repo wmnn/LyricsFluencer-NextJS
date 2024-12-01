@@ -9,22 +9,34 @@ interface UserContextType {
     setUserContext: (updateFn: (prev: User) => User) => void;
 }
 
-function UserContextProvider({ children }) {
+export function getUserFromLocaleStorage() {
 
-    const [user, setUser] = useState<User>({
+    console.log('Loading user from locale storage.')
+    const storedUser = localStorage.getItem('user');
+   
+    if (storedUser && storedUser != "undefined") {
+        // setUser(JSON.parse(storedUser))
+        const savedUser = JSON.parse(storedUser);
+        console.log('User in locale storage ' + JSON.stringify(savedUser, null, 2))
+        return savedUser
+    } 
+
+    console.log('No user is in locale storage')
+    return {
         learnedLanguage: 'en',
         nativeLanguage: 'en',
+    }
+}
+
+function UserContextProvider({ children }) {
+
+    const [user, setUser] = useState<any>({
+        learnedLanguage: 'de',
+        nativeLanguage: 'de',
     })
 
     useEffect(() => {
-        console.log(localStorage)
-        const storedUser = localStorage.getItem('user');
-       
-        if (storedUser && storedUser != "undefined") {
-            setUser(JSON.parse(storedUser))
-        } else {
-            console.log('No user is saved')
-        }
+        setUser(getUserFromLocaleStorage())
     }, [])
 
     function setUserContext(updateFn: (prev: User) => User) {
@@ -33,7 +45,7 @@ function UserContextProvider({ children }) {
             console.log("Can't update user with: ", newUser);
             return;
         }
-        console.log(`New user: ${JSON.stringify(newUser)}`);
+        console.log(`Updated user: ${JSON.stringify(newUser)}`);
         localStorage.setItem('user', JSON.stringify(newUser));
         setUser(newUser);
     }

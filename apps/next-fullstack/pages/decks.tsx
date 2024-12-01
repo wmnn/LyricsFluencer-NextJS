@@ -9,7 +9,7 @@ import AddDeck from "../components/Decks/AddDeckButtonAndPopup";
 export default function Decks() {
 
     const {deckContext, setDeckContext} = useContext(DeckContext)
-    const {userContext, setUserContext} = useContext(UserContext)
+    const {userContext} = useContext(UserContext)
 
     useEffect(() => {
         fetchDecks()

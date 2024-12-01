@@ -4,10 +4,9 @@ import { UserContext } from '../context/UserContext';
 import { SelectedSongRequest, SelectedSongResponse, Song } from "../types";
 import { useRouter } from 'next/router';
 
-export default function SongResult({ song, key }) {
+export default function SongResult({ song }) {
 
-    const {_, setSongContext}: any = useContext(SongContext);
-    const {userContext, setUserContext}: any = useContext(UserContext);
+    const {userContext}: any = useContext(UserContext);
     const router = useRouter(); 
 
     async function handleSelectedSong(song: Song) {
@@ -35,7 +34,7 @@ export default function SongResult({ song, key }) {
         }
     }
 
-    return <button onClick={() => handleSelectedSong(song)} className='border-2 rounded-xl flex flex-col p-2' key={key}>
+    return <button onClick={() => handleSelectedSong(song)} className='border-2 rounded-xl flex flex-col p-2'>
         <p>Artist: {song.artist}</p>
         <p>Song: {song.name}</p>
         <p>Album: {song.album ?? ''}</p>

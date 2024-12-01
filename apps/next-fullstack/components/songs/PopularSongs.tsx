@@ -6,7 +6,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default function PopularSongs() {
 
     const [popularSongs, setPopularSongs] = useState([])
-    const {userContext, setUserContext}: any = useContext(UserContext);
+    const {userContext}: any = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
 
     async function fetchPopularSongs() {
@@ -41,7 +41,9 @@ export default function PopularSongs() {
                         <ClipLoader color="#7a7a7a" size={28} />
                     </div>
                 :
-                    popularSongs.map((song, i) => <SongResult song={song} key={i}/>) 
+                    popularSongs.map((song, i) => <div key={i} className="w-[100%] grow flex flex-col">
+                        <SongResult song={song}/>
+                    </div>) 
             }
         </div>
     </>
