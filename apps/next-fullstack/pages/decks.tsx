@@ -1,32 +1,40 @@
-import { useContext, useEffect } from "react"
-import { UserContext } from "../components/context/UserContext";
+import { useContext, useEffect, useState } from "react"
 import { handleProtectedRoute } from "../components/auth";
-import { useRouter } from "next/router";
 import { auth, getAuthToken } from "@lyricsfluencer/firebase-client";
+import DeckButton from "../components/Decks/DeckButton";
+import { DeckContext } from "../components/context/DeckContext";
+import { UserContext } from "../components/context/UserContext";
+import AddDeck from "../components/Decks/AddDeckButtonAndPopup";
 
 export default function Decks() {
 
+    const {deckContext, setDeckContext} = useContext(DeckContext)
     const {userContext, setUserContext} = useContext(UserContext)
-    const router = useRouter();
 
     useEffect(() => {
         fetchDecks()
-    })
+    }, [userContext])
 
     async function fetchDecks() {
         // await handleProtectedRoute(router);
         const token = await getAuthToken();
         if (!token) return;
-        const res = await fetch('/flashcards/decks', {
+        const res = await (await fetch('/flashcards/decks', {
             headers: {
                 'Authorization': `Bearer ${token}`  // Send token as Bearer token
             }
-        });
-        console.log(await res.json())
+        })).json();
+        setDeckContext(() => res.decks);
     }
     
-    return <>
+    return <div className="flex flex-col gap-4">
+        {deckContext.map((deck, i) => {
+            return <div key={i}>
+                <DeckButton deckName={deck.deckName} cards={deck.cards}/>
+            </div>
+        })}
+
+        <AddDeck />
     
-    
-    </>
+    </div>
 }

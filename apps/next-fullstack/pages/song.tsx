@@ -15,7 +15,6 @@ export default function Song () {
 
         const searchParams = new URLSearchParams(window.location.search);
         const res = await (await fetch(`/api/song?url=${searchParams.get('url')}&id=${searchParams.get('id')}&nativeLanguage=en`)).json();
-        console.log(res)
         if (res.status == 200) {
             setSong(res.song);
         }

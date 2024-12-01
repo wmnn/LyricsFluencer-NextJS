@@ -1,7 +1,12 @@
 import React from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
 
-function Button({text, type, textColor, color, handleClick, isLoading}) {
+export const buttonStyles = `pl-4 pr-4 w-full pt-2 pb-2
+flex justify-center gap-2 items-center text-lg border-gray-200 
+border-[1px] hover:bg-gray-200 transition-all text-center 
+rounded-xl shadow-xl 
+hover:cursor-pointer `
+function Button({text, type, textColor, color, handleClick, isLoading, children}) {
 
     const height = '30px'
 
@@ -9,23 +14,20 @@ function Button({text, type, textColor, color, handleClick, isLoading}) {
         <button 
             type={type} 
             className={`
-                pl-4 pr-4 w-full pt-2 pb-2
-                flex justify-center gap-2 items-center text-lg border-gray-200 
-                border-[1px] hover:bg-gray-200 transition-all text-center 
-                rounded-xl shadow-xl 
-                hover:cursor-pointer 
+                ${buttonStyles}
                 ${color ? color + " " : ""} 
                 ${textColor ? "text-" + textColor + " " : "text-white "}
             `} 
             onClick={() => handleClick()}
         >
             
-            <div className={`h-[${height}] flex justify-center items-center gap-2`}>
-                {!isLoading ? text : <ClipLoader color="#7a7a7a" size={28} />}
-            </div> 
-          
+            {children ? children : 
+                <div className={`h-[${height}] flex justify-center items-center gap-2`}>
+                    {!isLoading ? text : <ClipLoader color="#7a7a7a" size={28} />}
+                </div>       
+            }
         </button>
-  )
+    ) 
 }
 
 Button.propTypes = {
@@ -39,7 +41,8 @@ Button.defaultProps = {
   textColor: 'black', 
   color: 'white', 
   handleClick: () => {},
-  isLoading: false
+  isLoading: false,
+  children: undefined
 };
 
 export default Button

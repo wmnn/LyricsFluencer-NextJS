@@ -15,7 +15,6 @@ export async function verifyToken(token){
     try{
         const decodeValue = await admin.auth().verifyIdToken(token);
         if (decodeValue) {
-            //console.log(decodeValue)
             return { uid: decodeValue.uid, email: decodeValue.email } 
         }else{
             return null

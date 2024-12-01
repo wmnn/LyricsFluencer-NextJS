@@ -54,6 +54,9 @@ router.delete('/decks', async (req, res) => {
     res.json({})
 });
 
+/**
+ * Adds a card to a deck
+ */
 router.post('/decks/cards', async (req, res) => {
 
     const token = req.headers.authorization && req.headers.authorization.split('Bearer ')[1];
@@ -80,6 +83,9 @@ router.post('/decks/cards', async (req, res) => {
     
 })
 
+/**
+ * Updates a existing card
+ */
 router.patch('/decks/cards', async (req, res) => {
 
     const token = req.headers.authorization && req.headers.authorization.split('Bearer ')[1];

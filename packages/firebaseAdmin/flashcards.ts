@@ -59,17 +59,16 @@ async function fetchingDecks(uid) {
 // Get all cards from a specific deck
 async function getCards(deckRef) {
     try {
-      // Fetch all cards from the 'cards' subcollection
-      const cardsSnapshot = await deckRef.collection('cards').get();
-      const cards = cardsSnapshot.docs.map(doc => ({
-        id: doc.id,  // Get the document ID for each card
-        ...doc.data(),  // Get the card data
-      }));
-  
-      return cards;  // Return an array of cards
+        // Fetch all cards from the 'cards' subcollection
+        const cardsSnapshot = await deckRef.collection('cards').get();
+        const cards = cardsSnapshot.docs.map(doc => ({
+            id: doc.id,  // Get the document ID for each card
+            ...doc.data(),  // Get the card data
+        }));
+        return cards;  // Return an array of cards
     } catch (error) {
-      console.error('Error getting cards:', error);
-      return [];  // Return an empty array in case of an error
+        console.error('Error getting cards:', error);
+        return [];  // Return an empty array in case of an error
     }
 }
 
@@ -81,7 +80,7 @@ async function handleAddToDeck(uid, deckName, card) {
         const newCard = {
             ...card,
             interval: 0,
-            due: new Date()
+            due: new Date().toISOString()
         };
         const docRef = await deckRef.add(newCard);
         newCard.id = docRef.id

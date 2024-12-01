@@ -9,8 +9,5 @@ export default function Word({word}) {
                 <SongPopup word={word} />
             </div>
         </div>
-
-
-
     </>
 }

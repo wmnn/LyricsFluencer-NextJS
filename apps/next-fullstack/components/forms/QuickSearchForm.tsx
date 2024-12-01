@@ -46,7 +46,7 @@ export default function QuickSearchForm() {
 
         <div className="flex flex-col">
             <SelectNativeLanguageMenu />
-            <SearchForm handleSearch={handleSearch} buttonText={`Display song`} isLoading={isLoading}/>
+            <SearchForm handleSearch={handleSearch} buttonText={`Quick Search`} isLoading={isLoading}/>
         </div>
 
     </>

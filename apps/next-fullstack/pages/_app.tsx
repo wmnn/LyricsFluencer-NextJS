@@ -1,4 +1,4 @@
-import "./index.css";
+import './index.css';
 import React from "react";
 import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
@@ -7,6 +7,7 @@ import { UserContextProvider } from '../components/context/UserContext'
 import { ResultSongsContextProvider } from '../components/context/ResultSongsContext'
 import type { AppProps } from 'next/app'
 import { SongContextProvider } from "../components/context/SongContext";
+import { DeckContextProvider } from "../components/context/DeckContext";
  
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode
@@ -21,15 +22,17 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <UserContextProvider>
             <ResultSongsContextProvider>
                 <SongContextProvider>
+                    <DeckContextProvider>   
 
-                    {
-                        Component.getLayout ? (    
-                            Component.getLayout(<Component {...pageProps} />)
-                        ): <DefaultLayout>
-                            <Component {...pageProps} />
-                        </DefaultLayout>                        
-                    }
-                    
+                        {
+                            Component.getLayout ? (    
+                                Component.getLayout(<Component {...pageProps} />)
+                            ): <DefaultLayout>
+                                <Component {...pageProps} />
+                            </DefaultLayout>                        
+                        }
+
+                    </DeckContextProvider>
                 </SongContextProvider>
             </ResultSongsContextProvider>
         </UserContextProvider>

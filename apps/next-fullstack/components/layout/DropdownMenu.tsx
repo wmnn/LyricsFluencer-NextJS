@@ -24,10 +24,6 @@ export default function HeaderMenu ({ isMenuShown, setIsMenuShown }) {
         }        
     }
 
-    useEffect(() => {
-        console.log(userContext.id)
-    }, [])
-
     return (
         <div className={`
             border-b border-black
