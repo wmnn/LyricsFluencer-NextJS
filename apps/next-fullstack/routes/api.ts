@@ -13,7 +13,6 @@ router.post('/search', async (req, res) => {
 router.post('/popular', async (req, res) => {
     // TODO get targetLanguageCode from firestore
     req.body.targetLanguage = "DE"
-    console.log(req.body)
     const songs = await musixmatch.getPopularSongs(req.body.targetLanguageCode);
     res.json({ status: 200, songs });
 });
@@ -22,7 +21,6 @@ router.post('/quicksearch', async (req, res) => {
     try {
         if (!req.body.target || !req.body.searchQuery ) return res.json({ status: 400 })
 
-        console.log(req.body)
         const target = req.body.target
         const query = req.body.searchQuery
 

@@ -106,7 +106,7 @@ export default function LearnDeckPopup({ deckName, handleAbort }) {
     }
     
     return <Popup>
-        <div className="bg-white p-8 rounded-2xl min-w-[300px] min-h-[480px] flex flex-col">
+        <div className="bg-white p-8 rounded-2xl h-full w-full xl:w-min xl:h-min flex flex-col">
             <div className="flex justify-end">
                 <Icon onClick={() => handleAbort()}>
                     <CrossIcon />
@@ -114,22 +114,36 @@ export default function LearnDeckPopup({ deckName, handleAbort }) {
             </div>
             
                 
-            <div className="grow" onClick={() => setIsBackShown(true)}>
-                <p>{dueCards[currentIdx]?.front ?? ''}</p>
-                <p>{isBackShown ? dueCards[currentIdx]?.back ?? '' : ''}</p>
-            </div>
-            
-            {isBackShown ? 
-                <div className="flex gap-2">
-                    <Button handleClick={() => handleAgain()}>
-                        <p className="text-red-600">Again</p>
-                    </Button>
-
-                    <Button  text={`Good`} handleClick={() => handleGood()}>
-                        <p className="text-green-600">Good</p>
-                    </Button>
+          
+                <div className="grow xl:min-h-[480px] xl:min-w-[480px]" onClick={() => setIsBackShown(true)}>
+                    <p>{dueCards[currentIdx]?.front ?? ''}</p>
+                    <p>{isBackShown ? dueCards[currentIdx]?.back ?? '' : ''}</p>                    
                 </div>
-            : ''}
+
+                {isBackShown ? 
+                    <div className="flex gap-2 min-h-[80px] items-end">
+                        <div className="flex h-min gap-2 justify-center grow">
+                            <Button handleClick={() => handleAgain()}>
+                                <p className="text-red-600">Again</p>
+                            </Button>
+
+                            <Button  text={`Good`} handleClick={() => handleGood()}>
+                                <p className="text-green-600">Good</p>
+                            </Button>
+                        </div>
+                    </div>
+                : <div className="min-h-[80px]">
+                    <div className="flex h-min">
+                        <Button handleClick={() => setIsBackShown(true)}>
+                            <p className="text-black">Show solution</p>
+                        </Button>
+                    </div>
+                </div>
+                }
+           
+          
+            
+            
 
         </div>
     </Popup>

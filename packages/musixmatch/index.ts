@@ -69,8 +69,42 @@ export async function getLyrics(song: Song) : Promise<Song> {
         song.lyrics = await callLyricsEndpoint(song.id);
     }
 
+    const metaData = await getSongMetaData(song.id);
+    if (metaData) {
+        song = {
+            ...song,     
+            ...metaData 
+        };
+    }
     return song;
 }
+/**
+ * Calls the lyrics endpoint and sets artist song title etc.
+ * @param songId 
+ * @returns 
+ */
+async function getSongMetaData(id: string) : Promise<Song | undefined> {
+
+    try {
+        const res = (await (await fetch(
+            `https://api.musixmatch.com/ws/1.1/track.get?apikey=${env.MUSIXMATCH_API_KEY}&commontrack_id=${id}`,{
+                method: 'GET',
+            }
+        )).json()).message.body.track;
+    
+        const metaData: Song = {
+            id: id,
+            name: res.track_name,
+            artist: res.artist_name,
+            album: res.album_name
+        } 
+        return metaData
+        
+    } catch (e) {
+        return undefined;
+    }
+}
+
 async function callLyricsEndpoint(songId: string) : Promise<string[]> {
 
     try {

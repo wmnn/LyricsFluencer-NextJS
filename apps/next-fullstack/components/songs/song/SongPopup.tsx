@@ -7,7 +7,7 @@ export default function SongPopup({ word }) {
     const {userContext, _}: any = useContext(UserContext);
     const [isAddToDeckPopupShown, setIsAddToDeckPopupShown] = useState(false);
 
-    return <div className="bg-white p-8 flex flex-col items-center border-[1px] border-black rounded-xl w-[240px]">
+    return <div className="bg-white p-2 flex flex-col items-center border-[1px] shadow-xl rounded-2xl w-[180px]">
         <button onClick={() => setIsAddToDeckPopupShown(true)}>
             Add to deck
         </button>

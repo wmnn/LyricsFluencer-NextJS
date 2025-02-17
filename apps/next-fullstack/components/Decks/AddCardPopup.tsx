@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CardPopup from "./CardPopup";
 import { DeckContext } from "../context/DeckContext";
 import { getAuthToken } from "@lyricsfluencer/firebase-client";
@@ -7,12 +7,15 @@ export default function AddCardPopup({onAbort, cardFront}) {
 
     const [front, setFront] = useState(cardFront);
     const [back, setBack] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const {setDeckContext, selectedDeck} = useContext(DeckContext);
     
     async function onSubmit() {
 
         const token = await getAuthToken();
         if (!token) return;
+
+        setIsLoading((prev) => !prev);
 
         const res = await fetch('/flashcards/decks/cards', {
             method: 'POST',
@@ -38,6 +41,7 @@ export default function AddCardPopup({onAbort, cardFront}) {
             deck.cards = [...deck.cards, card]
             return deck;
         }));
+        setIsLoading((prev) => !prev);
         onAbort()
     }
 
@@ -49,6 +53,7 @@ export default function AddCardPopup({onAbort, cardFront}) {
         onAbort={onAbort}
         onSubmit={onSubmit}
         showDeckSelectionMenu={true}
+        isLoading={isLoading}
     />
 }
 
