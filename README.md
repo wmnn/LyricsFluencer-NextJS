@@ -21,3 +21,6 @@
 10. Run: `pnpm i`
 11. Run: `pnpm run dev`
 
+### Preview Video
+
+[A preview video of the web app is available](https://youtu.be/krBXD9wlvG0?si=AJ-__9CgocEpJWIz)
